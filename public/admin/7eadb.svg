@@ -1,0 +1,11 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="flash">
+<path id="Vector" d="M3.48377 7.5527L8.14926 1.56411C8.51413 1.09575 9.19806 1.38726 9.19806 2.01115V6.6464C9.19806 7.0201 9.46626 7.3231 9.79713 7.3231H12.0663C12.5819 7.3231 12.8567 8.0097 12.5161 8.44684L7.8506 14.4354C7.48573 14.9038 6.8018 14.6123 6.8018 13.9884V9.35317C6.8018 8.97944 6.53358 8.67644 6.20273 8.67644H3.9335C3.418 8.67644 3.14322 7.98984 3.48377 7.5527Z" fill="#FF9510" stroke="url(#paint0_linear_0_25)" stroke-width="0.244648" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_0_25" x1="7.99993" y1="1.3331" x2="7.99993" y2="14.6664" gradientUnits="userSpaceOnUse">
+<stop stop-color="#FF9700"/>
+<stop offset="1" stop-color="#FFD300"/>
+</linearGradient>
+</defs>
+</svg>

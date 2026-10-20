@@ -1,0 +1,2 @@
+import Link from "next/link";
+export default function Page() { return <main className="p-8"><h1 className="text-2xl font-bold">New application</h1><p className="my-4">Customers start applications from their own account. Creating an application on behalf of another customer is not available.</p><Link href="/admin/applications" className="text-green-700 underline">Back to applications</Link></main>; }

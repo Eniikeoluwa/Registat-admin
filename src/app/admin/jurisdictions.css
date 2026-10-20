@@ -1,0 +1,227 @@
+.jurisdictions-workspace { background: #f8fafc; }
+.jurisdictions-workspace.has-drawer { grid-template-columns: minmax(0,1fr) 360px; }
+.jurisdictions-workspace .applications-page-header { padding-bottom: 8px; }
+.jurisdictions-table { min-width: 950px; background: white; }
+.jurisdictions-table th { padding: 16px 10px; }
+.jurisdictions-table td { padding: 11px 10px; height: 64px; color: #475569; }
+.jurisdictions-table td:nth-child(2) { white-space: nowrap; }
+.jurisdictions-table td strong { color: #0f172a; font-weight: 600; }
+.jurisdictions-table td:last-child button { color: #94a3b8; font-size: 19px; }
+.jurisdiction-flag { font-size: 21px; vertical-align: middle; margin-right: 10px; }
+.jurisdiction-code { color: #94a3b8; font-size: 11px; font-weight: 600; margin-right: 12px; }
+.jurisdiction-status { display: inline-block; border-radius: 999px; padding: 3px 9px; line-height: 16px; font-size: 11px; font-weight: 500; white-space: nowrap; }
+.jurisdiction-status.active { color: #047857; background: #ecfdf5; }
+.jurisdiction-status.coming-soon { color: #c7670d; background: #fffbeb; }
+.jurisdiction-status.inactive { color: #e11d48; background: #fff1f2; }
+.jurisdiction-drawer { border-left: 1px solid #e2e8f0; margin: -32px -24px -32px 0; }
+.jurisdiction-drawer-header { display: flex; align-items: center; gap: 12px; padding: 24px 20px 16px; }
+.jurisdiction-drawer-flag { display: grid; place-items: center; width: 52px; height: 52px; border: 1px solid #e2e8f0; border-radius: 11px; font-size: 32px; flex-shrink: 0; }
+.jurisdiction-drawer-header > div:nth-child(2) { min-width: 0; flex: 1; }
+.jurisdiction-drawer-header h2 { font-size: 17px; font-weight: 700; white-space: nowrap; }
+.jurisdiction-drawer-header h2 .jurisdiction-status { vertical-align: middle; margin-left: 5px; }
+.jurisdiction-drawer-header p { color: #64748b; font-size: 12px; margin-top: 3px; }
+.jurisdiction-drawer-header > button { align-self: start; font-size: 22px; color: #94a3b8; line-height: 20px; }
+.jurisdiction-drawer .application-drawer-tabs { gap: 16px; }
+.jurisdiction-drawer .application-drawer-tabs button { font-size: 11px; white-space: nowrap; }
+.jurisdiction-drawer-body section { padding: 20px 0; border-bottom: 1px solid #eef2f6; }
+.jurisdiction-drawer-body h3 { font-size: 12px; font-weight: 700; text-transform: uppercase; }
+.jurisdiction-section-title { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.jurisdiction-section-title > button { color: #065f46; font-size: 12px; font-weight: 600; }
+.jurisdiction-detail-list { margin-top: 12px; font-size: 12px; }
+.jurisdiction-detail-list > div { display: flex; justify-content: space-between; align-items: start; gap: 12px; padding: 9px 0; border-bottom: 1px solid #eef2f6; }
+.jurisdiction-detail-list dt { color: #718096; }
+.jurisdiction-detail-list dd { text-align: right; color: #0f172a; max-width: 58%; overflow-wrap: anywhere; }
+.jurisdiction-description { margin-top: 14px; color: #718096; font-size: 12px; }
+.jurisdiction-description p { margin-top: 7px; padding: 10px; border: 1px solid #eef2f6; border-radius: 8px; color: #475569; background: #f8fafc; line-height: 18px; }
+.jurisdiction-stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-top: 12px; }
+.jurisdiction-stat-grid > div { border: 1px solid #e7edf3; background: #f8fafc; border-radius: 11px; padding: 14px; min-width: 0; }
+.jurisdiction-stat-grid strong { display: block; color: #0f172a; font-size: 15px; overflow-wrap: anywhere; }
+.jurisdiction-stat-grid small { color: #718096; font-size: 10px; }
+.jurisdiction-drawer-card { border: 1px solid #e2e8f0; border-radius: 9px; padding: 13px; margin-top: 11px; }
+.jurisdiction-drawer-card strong { font-size: 12px; }
+.jurisdiction-drawer-card p, .jurisdiction-muted { color: #64748b; font-size: 11px; line-height: 18px; margin: 5px 0; }
+.jurisdiction-drawer-card small { margin-left: 8px; color: #64748b; }
+.jurisdiction-setting-label { display: grid; gap: 6px; font-size: 12px; font-weight: 600; margin: 16px 0; }
+.jurisdiction-setting-label select { border: 1px solid #dce3eb; border-radius: 8px; padding: 9px; background: white; }
+.jurisdiction-setup { min-height: calc(100dvh - 64px); background: #f8fafc; padding: 24px 32px 50px; color: #0f172a; }
+.jurisdiction-setup-heading { padding: 0 0 24px; border-bottom: 1px solid #fff; }
+.jurisdiction-breadcrumb { display: flex; gap: 10px; color: #64748b; font-size: 13px; margin-bottom: 10px; }
+.jurisdiction-breadcrumb a:hover { color: #047857; text-decoration: underline; }
+.jurisdiction-setup-heading h1 { font-size: 24px; font-weight: 650; letter-spacing: -.4px; }
+.jurisdiction-setup-heading p { color: #6b7280; font-size: 14px; margin-top: 5px; }
+.jurisdiction-setup-grid { display: grid; grid-template-columns: 200px minmax(0,1fr) 270px; gap: 24px; margin-top: 26px; align-items: start; }
+.jurisdiction-stepper { display: grid; gap: 6px; }
+.jurisdiction-stepper button { display: flex; gap: 12px; text-align: left; padding: 8px 0; color: #64748b; }
+.jurisdiction-stepper button > span:first-child { display: grid; place-items: center; flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%; background: #e2e8f0; font-size: 12px; font-weight: 600; }
+.jurisdiction-stepper button.active { color: #0f172a; }
+.jurisdiction-stepper button.active > span:first-child { background: #0f172a; color: white; }
+.jurisdiction-stepper button.complete > span:first-child { background: #042d23; color: white; }
+.jurisdiction-stepper strong { display: block; font-size: 12px; line-height: 17px; font-weight: 600; }
+.jurisdiction-stepper small { display: block; font-size: 11px; line-height: 15px; margin-top: 2px; }
+.jurisdiction-setup-main { min-width: 0; }
+.jurisdiction-setup-card, .jurisdiction-setup-aside > section { border: 1px solid #dce4ec; border-radius: 13px; background: white; box-shadow: 0 1px 2px #0000000a; }
+.jurisdiction-setup-card { padding: 26px; }
+.jurisdiction-card-heading { margin-bottom: 20px; }
+.jurisdiction-card-heading h2 { font-size: 17px; font-weight: 700; }
+.jurisdiction-card-heading p { font-size: 12px; color: #64748b; line-height: 18px; margin-top: 4px; }
+.jurisdiction-form { display: grid; gap: 20px; }
+.jurisdiction-form label { display: block; font-size: 12px; font-weight: 600; color: #334155; min-width: 0; }
+.jurisdiction-form label span:not(.jurisdiction-status) { color: #94a3b8; font-weight: 400; }
+.jurisdiction-form label em { color: #ef4444; font-style: normal; }
+.jurisdiction-form input:not([type=checkbox]), .jurisdiction-form select, .jurisdiction-form textarea, .jurisdiction-select-button { display: block; width: 100%; min-height: 40px; margin-top: 7px; padding: 9px 11px; border: 1px solid #dce4ec; border-radius: 8px; background: white; color: #0f172a; font-size: 12px; font-weight: 400; }
+.jurisdiction-form input:disabled { background: #f8fafc; color: #94a3b8; }
+.jurisdiction-form textarea { resize: vertical; min-height: 75px; }
+.jurisdiction-two-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.jurisdiction-toggle-row { display: flex !important; align-items: center; gap: 12px; }
+.jurisdiction-toggle-row input, .jurisdiction-card-toggle input, .jurisdiction-service-status input, .jurisdiction-pricing-card label input { appearance: none; width: 39px; height: 21px; border-radius: 99px; background: #d1d5db; position: relative; cursor: pointer; flex-shrink: 0; }
+.jurisdiction-toggle-row input::after, .jurisdiction-card-toggle input::after, .jurisdiction-service-status input::after, .jurisdiction-pricing-card label input::after { content: ''; position: absolute; top: 2px; left: 2px; width: 17px; height: 17px; background: white; border-radius: 50%; box-shadow: 0 1px 2px #0002; transition: transform .15s; }
+.jurisdiction-toggle-row input:checked, .jurisdiction-card-toggle input:checked, .jurisdiction-service-status input:checked, .jurisdiction-pricing-card label input:checked { background: #067939; }
+.jurisdiction-toggle-row input:checked::after, .jurisdiction-card-toggle input:checked::after, .jurisdiction-service-status input:checked::after, .jurisdiction-pricing-card label input:checked::after { transform: translateX(18px); }
+.jurisdiction-toggle-row strong, .jurisdiction-toggle-row small { display: block; }
+.jurisdiction-toggle-row small { color: #64748b; font-size: 11px; font-weight: 400; margin-top: 2px; }
+.jurisdiction-actions { display: flex; justify-content: space-between; gap: 12px; margin-top: 28px; }
+.jurisdiction-actions.end { justify-content: flex-end; }
+.jurisdiction-actions .application-button { font-size: 12px; }
+.jurisdiction-error { border: 1px solid #fecaca; border-radius: 8px; background: #fef2f2; color: #b91c1c; font-size: 12px; padding: 9px 12px; margin-top: 14px; }
+.jurisdiction-setup-aside { display: grid; gap: 16px; }
+.jurisdiction-setup-aside > section { padding: 18px; }
+.jurisdiction-setup-aside h3 { font-size: 13px; font-weight: 700; }
+.jurisdiction-setup-aside p { font-size: 11px; color: #64748b; line-height: 17px; margin-top: 4px; }
+.jurisdiction-country-preview { border: 1px solid #ffedc7; background: #fffcf5; border-radius: 9px; padding: 15px; margin-top: 13px; }
+.jurisdiction-country-preview > div { display: flex; gap: 12px; align-items: center; padding: 8px 0 15px; border-bottom: 1px solid #ffedc7; }
+.jurisdiction-country-preview > div > span { font-size: 34px; }
+.jurisdiction-country-preview strong { font-size: 12px; }
+.jurisdiction-country-preview strong small { display: block; width: fit-content; margin-top: 5px; }
+.jurisdiction-country-preview dl > div { display: flex; justify-content: space-between; padding: 6px 0; font-size: 11px; gap: 8px; }
+.jurisdiction-country-preview dt { color: #64748b; }
+.jurisdiction-country-preview dd { text-align: right; }
+.jurisdiction-setup-aside ol { list-style: decimal; margin: 13px 0 0 18px; display: grid; gap: 10px; color: #64748b; font-size: 11px; line-height: 17px; }
+.jurisdiction-tips { border-color: #d1fae5 !important; background: #effcf7 !important; color: #065f46; }
+.jurisdiction-tips ul { list-style: disc; margin: 13px 0 0 18px; display: grid; gap: 6px; font-size: 11px; line-height: 16px; }
+.jurisdiction-service-cards { display: grid; gap: 12px; }
+.jurisdiction-service-cards article { border: 1px solid #e2e8f0; border-radius: 11px; overflow: hidden; }
+.jurisdiction-service-card-main { display: flex; gap: 10px; align-items: center; padding: 15px; }
+.jurisdiction-service-card-main > input[type=checkbox] { width: 16px; height: 16px; accent-color: #047857; }
+.jurisdiction-service-card-icon { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 9px; background: #ecfdf5; color: #047857; font-size: 20px; flex-shrink: 0; }
+.jurisdiction-service-card-main > div { flex: 1; min-width: 0; }
+.jurisdiction-service-card-main strong { font-size: 12px; font-weight: 700; }
+.jurisdiction-service-card-main p { color: #64748b; font-size: 11px; line-height: 16px; margin-top: 3px; }
+.jurisdiction-card-toggle { display: flex; align-items: center; gap: 6px; color: #475569; font-size: 11px; flex-shrink: 0; }
+.jurisdiction-service-card-main .application-button { font-size: 11px; padding: 6px 10px; min-height: 32px; }
+.jurisdiction-configured, .jurisdiction-unconfigured { padding: 11px 15px; font-size: 10px; color: #475569; background: #f4fcf8; }
+.jurisdiction-unconfigured { background: #fffcf2; color: #a65313; }
+.jurisdiction-link-button { color: #047857; font-size: 12px; font-weight: 600; margin-top: 15px; }
+.jurisdiction-compliance-controls { display: flex; gap: 12px; margin-bottom: 17px; }
+.jurisdiction-compliance-controls input, .jurisdiction-picker-search { border: 1px solid #dce4ec; border-radius: 8px; background: #f8fafc; padding: 9px 11px; min-width: 0; flex: 1; font-size: 12px; }
+.jurisdiction-compliance-controls .application-button { font-size: 11px; padding: 7px 10px; }
+.jurisdiction-requirements-table { overflow-x: auto; }
+.jurisdiction-requirements-head, .jurisdiction-requirement-row { display: grid; grid-template-columns: 1.6fr 1fr .8fr 1fr .7fr 35px; gap: 9px; align-items: center; min-width: 610px; padding: 12px 10px; font-size: 10px; }
+.jurisdiction-requirements-head { background: #f8fafc; color: #64748b; text-transform: uppercase; }
+.jurisdiction-requirement-row { border-bottom: 1px solid #edf2f7; color: #475569; }
+.jurisdiction-requirement-row strong { color: #334155; }
+.jurisdiction-compliance-empty { text-align: center; padding: 60px 15px; color: #64748b; }
+.jurisdiction-compliance-empty > span { display: grid; place-items: center; margin: 0 auto 15px; width: 50px; height: 50px; border-radius: 12px; background: #f1f5f9; font-size: 22px; }
+.jurisdiction-compliance-empty strong { display: block; color: #0f172a; font-size: 12px; }
+.jurisdiction-compliance-empty p { max-width: 290px; margin: 7px auto 0; font-size: 11px; line-height: 17px; }
+.jurisdiction-row-menu { position: relative; }
+.jurisdiction-row-menu > button { font-size: 18px; color: #94a3b8; }
+.jurisdiction-row-menu > div { position: absolute; top: 25px; right: 0; z-index: 5; width: 130px; border: 1px solid #e2e8f0; border-radius: 8px; background: white; box-shadow: 0 7px 18px #0002; padding: 5px; }
+.jurisdiction-row-menu > div button { display: block; width: 100%; text-align: left; padding: 7px; font-size: 11px; }
+.jurisdiction-row-menu > div button:hover { background: #f8fafc; }
+.jurisdiction-row-menu .danger { color: #dc2626; }
+.jurisdiction-review-section { border: 1px solid #dce4ec; border-radius: 11px; padding: 18px; margin-bottom: 13px; }
+.jurisdiction-review-section > header { display: flex; gap: 10px; align-items: center; margin-bottom: 14px; }
+.jurisdiction-review-section > header > span { display: grid; place-items: center; width: 18px; height: 18px; border-radius: 50%; color: white; background: #059669; font-size: 10px; }
+.jurisdiction-review-section > header > div { flex: 1; }
+.jurisdiction-review-section > header strong, .jurisdiction-review-section > header small { display: block; }
+.jurisdiction-review-section > header strong { font-size: 12px; }
+.jurisdiction-review-section > header small { font-size: 10px; color: #94a3b8; margin-top: 2px; }
+.jurisdiction-review-section .application-button { min-height: 30px; padding: 5px 10px; font-size: 11px; }
+.jurisdiction-review-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; font-size: 11px; border-top: 1px solid #edf2f7; padding-top: 13px; }
+.jurisdiction-review-grid strong { display: block; font-size: 13px; margin-bottom: 7px; }
+.jurisdiction-review-grid dl > div { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 5px; }
+.jurisdiction-review-grid dt { color: #94a3b8; }
+.jurisdiction-review-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; border-top: 1px solid #edf2f7; padding: 10px 0; font-size: 11px; }
+.jurisdiction-review-row strong { flex: 1; }
+.jurisdiction-modal-backdrop { position: fixed; inset: 0; z-index: 80; display: grid; place-items: center; padding: 20px; background: #0f172a66; }
+.jurisdiction-modal-backdrop.nested { z-index: 90; background: #0f172a55; }
+.jurisdiction-dialog, .jurisdiction-service-dialog { width: min(720px, calc(100vw - 36px)); max-height: calc(100dvh - 40px); display: flex; flex-direction: column; background: white; border-radius: 16px; box-shadow: 0 20px 45px #0f172a33; overflow: hidden; }
+.jurisdiction-dialog > header, .jurisdiction-service-dialog > header { display: flex; align-items: center; gap: 15px; padding: 22px 25px; border-bottom: 1px solid #edf2f7; }
+.jurisdiction-dialog > header h2, .jurisdiction-service-dialog > header h2 { flex: 1; font-size: 20px; font-weight: 700; }
+.jurisdiction-dialog > header button, .jurisdiction-service-dialog > header button { color: #94a3b8; font-size: 23px; }
+.jurisdiction-dialog-body { padding: 22px 25px; overflow-y: auto; min-height: 0; }
+.jurisdiction-dialog > footer, .jurisdiction-service-dialog > footer { display: flex; justify-content: space-between; gap: 10px; padding: 16px 25px; border-top: 1px solid #edf2f7; }
+.jurisdiction-dialog > footer .application-button, .jurisdiction-service-dialog > footer .application-button { font-size: 12px; min-height: 35px; }
+.jurisdiction-select-button { text-align: left; color: #64748b; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.jurisdiction-select-button b { float: right; }
+.jurisdiction-documents-box { border: 1px solid #e2e8f0; border-radius: 11px; background: #f8fafc; padding: 14px; font-size: 12px; }
+.jurisdiction-documents-box > strong { display: block; }
+.jurisdiction-documents-box > p { color: #64748b; margin: 7px 0 12px; }
+.jurisdiction-documents-box > div { display: flex; justify-content: space-between; margin: 5px 0; }
+.jurisdiction-documents-box small { color: #64748b; }
+.jurisdiction-documents-box .application-button { padding: 5px 10px; min-height: 30px; font-size: 11px; }
+.jurisdiction-entity-picks { display: grid; gap: 8px; margin-top: 15px; max-height: 340px; overflow: auto; }
+.jurisdiction-entity-picks label { display: flex; align-items: center; gap: 11px; border: 1px solid #dce4ec; border-radius: 9px; padding: 10px; font-size: 12px; }
+.jurisdiction-entity-picks label.selected { border-color: #6ee7b7; background: #f0fdf9; }
+.jurisdiction-entity-picks input { accent-color: #047857; }
+.jurisdiction-service-dialog { width: min(1220px, calc(100vw - 40px)); height: min(850px, calc(100dvh - 40px)); }
+.jurisdiction-service-dialog > header > div { flex: 1; }
+.jurisdiction-service-dialog > header p { color: #64748b; font-size: 12px; margin-top: 5px; }
+.jurisdiction-service-dialog > header > span { border: 1px solid #e2e8f0; border-radius: 7px; padding: 7px; font-size: 11px; color: #475569; }
+.jurisdiction-service-status { display: flex; align-items: center; gap: 7px; font-size: 11px; color: #047857; }
+.jurisdiction-service-body { display: grid; grid-template-columns: 220px minmax(0,1fr) 260px; flex: 1; min-height: 0; }
+.jurisdiction-service-steps { padding: 18px 14px; border-right: 1px solid #edf2f7; }
+.jurisdiction-service-steps button { display: grid; grid-template-columns: 21px 1fr; gap: 0 8px; width: 100%; text-align: left; padding: 10px; border-radius: 9px; color: #64748b; }
+.jurisdiction-service-steps button.active { color: #065f46; background: #ecfdf5; }
+.jurisdiction-service-steps button > span { grid-row: 1/3; font-size: 11px; }
+.jurisdiction-service-steps strong { font-size: 12px; }
+.jurisdiction-service-steps small { font-size: 10px; margin-top: 2px; }
+.jurisdiction-service-content { min-width: 0; overflow-y: auto; padding: 25px; }
+.jurisdiction-section-heading { border-bottom: 1px solid #eef2f6; padding-bottom: 17px; margin-bottom: 18px; }
+.jurisdiction-section-heading h3 { font-size: 18px; font-weight: 650; }
+.jurisdiction-section-heading p { color: #64748b; font-size: 12px; margin-top: 5px; }
+.jurisdiction-service-entity-table, .jurisdiction-fields-card, .jurisdiction-pricing-card { border: 1px solid #dce4ec; border-radius: 10px; overflow: hidden; }
+.jurisdiction-service-entity-table { margin-top: 14px; }
+.jurisdiction-service-entity-table > div:first-child { display: flex; justify-content: space-between; padding: 10px 20px 10px 55px; background: #f8fafc; font-size: 10px; text-transform: uppercase; }
+.jurisdiction-service-entity-table label { display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-top: 1px solid #edf2f7; }
+.jurisdiction-service-entity-table input[type=checkbox], .jurisdiction-field-row input { accent-color: #047857; }
+.jurisdiction-service-entity-table label > span { flex: 1; }
+.jurisdiction-service-entity-table label strong, .jurisdiction-service-entity-table label small { display: block; font-size: 11px; }
+.jurisdiction-service-entity-table label small { color: #94a3b8; }
+.jurisdiction-entity-tabs { display: flex; gap: 7px; overflow-x: auto; margin: 17px 0; }
+.jurisdiction-entity-tabs button { padding: 8px 11px; border: 1px solid #dce4ec; border-radius: 7px; white-space: nowrap; font-size: 11px; font-weight: 600; }
+.jurisdiction-entity-tabs button.active { border-color: #059669; color: #065f46; background: #f0fdf9; }
+.jurisdiction-pricing-card { padding: 16px; }
+.jurisdiction-pricing-card h4, .jurisdiction-fields-card h4 { font-size: 12px; font-weight: 700; }
+.jurisdiction-pricing-card p, .jurisdiction-fields-card p { color: #64748b; font-size: 11px; margin-top: 3px; }
+.jurisdiction-pricing-card label { display: flex; align-items: center; gap: 8px; white-space: nowrap; font-size: 11px; }
+.jurisdiction-pricing-card table { width: 100%; border-collapse: collapse; font-size: 10px; margin-top: 13px; }
+.jurisdiction-pricing-card th { background: #f8fafc; color: #64748b; font-weight: 500; padding: 10px; text-align: left; }
+.jurisdiction-pricing-card td { background: #f7faf9; padding: 8px; border-top: 1px solid #e2e8f0; }
+.jurisdiction-pricing-card td input { width: 100%; min-width: 0; padding: 6px; border: 1px solid #dce4ec; border-radius: 6px; background: white; }
+.jurisdiction-pricing-card td button { font-size: 17px; color: #94a3b8; }
+.jurisdiction-pricing-total { display: flex; justify-content: space-between; background: #ecfdf5; color: #065f46; padding: 14px 12px; font-size: 12px; }
+.jurisdiction-pricing-total strong { font-size: 17px; }
+.jurisdiction-pricing-actions { display: flex; justify-content: space-between; padding: 12px 0 0; font-size: 11px; }
+.jurisdiction-fields-card .jurisdiction-section-title { padding: 16px; }
+.jurisdiction-fields-card .application-button { font-size: 11px; padding: 5px 8px; }
+.jurisdiction-field-head, .jurisdiction-field-row { display: grid; grid-template-columns: 1fr 75px 75px; gap: 7px; align-items: center; padding: 10px 15px; font-size: 10px; }
+.jurisdiction-field-head { background: #f8fafc; color: #64748b; }
+.jurisdiction-field-row { border-top: 1px solid #edf2f7; }
+.jurisdiction-field-row strong, .jurisdiction-field-row small { display: block; }
+.jurisdiction-field-row small { color: #64748b; margin-top: 3px; }
+.jurisdiction-field-row input { justify-self: center; }
+.jurisdiction-field-count { padding: 13px; border-top: 1px solid #edf2f7; font-size: 11px; }
+.jurisdiction-service-preview { border-left: 1px solid #d1fae5; background: #fbfefd; padding: 20px 17px; overflow-y: auto; }
+.jurisdiction-service-preview h3 { font-size: 12px; color: #064e3b; font-weight: 700; }
+.jurisdiction-service-preview > p { color: #64748b; font-size: 11px; line-height: 17px; margin: 6px 0 15px; }
+.jurisdiction-service-preview article { border: 1px solid #dce4ec; border-radius: 11px; padding: 16px; background: white; margin-bottom: 13px; }
+.jurisdiction-service-preview article > span { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 8px; color: #059669; background: #ecfdf5; }
+.jurisdiction-service-preview article strong { display: block; margin: 13px 0 6px; font-size: 12px; }
+.jurisdiction-service-preview article p, .jurisdiction-service-preview article li, .jurisdiction-service-preview article small { font-size: 10px; color: #64748b; line-height: 17px; }
+.jurisdiction-service-preview article li { margin-left: 10px; }
+.jurisdiction-service-preview article hr { margin: 13px 0; border-color: #eef2f6; }
+.jurisdiction-service-dialog > footer > div { display: flex; gap: 8px; }
+@media (max-width: 1200px) { .jurisdiction-setup-grid { grid-template-columns: 165px minmax(0,1fr) 235px; gap: 14px; } .jurisdiction-setup { padding: 22px; } .jurisdiction-service-body { grid-template-columns: 180px minmax(0,1fr) 220px; } }
+@media (max-width: 1050px) { .jurisdictions-workspace.has-drawer { grid-template-columns: minmax(0,1fr); } .jurisdiction-drawer { position: fixed; top: 64px; right: 0; bottom: 0; width: min(430px,100vw); margin: 0; z-index: 30; box-shadow: -12px 0 30px #0002; } .jurisdiction-setup-grid { grid-template-columns: 155px minmax(0,1fr); } .jurisdiction-setup-aside { display: none; } .jurisdiction-service-preview { display: none; } .jurisdiction-service-body { grid-template-columns: 180px minmax(0,1fr); } }
+@media (max-width: 700px) { .jurisdiction-setup { padding: 16px; } .jurisdiction-setup-grid { display: block; } .jurisdiction-stepper { display: flex; overflow-x: auto; margin-bottom: 14px; } .jurisdiction-stepper button { min-width: 105px; align-items: center; } .jurisdiction-stepper small { display: none; } .jurisdiction-setup-card { padding: 18px; } .jurisdiction-two-columns { grid-template-columns: 1fr; gap: 15px; } .jurisdiction-service-card-main { flex-wrap: wrap; } .jurisdiction-service-card-main > div { min-width: 70%; } .jurisdiction-card-toggle { margin-left: auto; } .jurisdiction-service-dialog { width: calc(100vw - 20px); height: calc(100dvh - 24px); } .jurisdiction-service-body { display: flex; flex-direction: column; } .jurisdiction-service-steps { display: flex; overflow-x: auto; border-right: 0; border-bottom: 1px solid #edf2f7; padding: 7px; } .jurisdiction-service-steps button { min-width: 120px; } .jurisdiction-service-steps small { display: none; } .jurisdiction-service-content { flex: 1; padding: 17px; } .jurisdiction-dialog-body { padding: 16px; } .jurisdiction-review-grid { grid-template-columns: 1fr; } }

@@ -1,0 +1,7 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="chart">
+<path id="Vector" d="M10 14V4C10 3.37875 10 3.06812 9.89853 2.82309C9.7632 2.49639 9.5036 2.23682 9.17693 2.10149C8.93187 2 8.62127 2 8 2C7.37873 2 7.06813 2 6.82307 2.10149C6.49639 2.23682 6.23682 2.49639 6.10149 2.82309C6 3.06812 6 3.37875 6 4V14H10Z" stroke="#9333EA" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_2" d="M11.3333 5.33333H10V14H11.3333C12.5904 14 13.2189 14 13.6095 13.6095C14 13.2189 14 12.5904 14 11.3333V8C14 6.74293 14 6.11438 13.6095 5.72386C13.2189 5.33333 12.5904 5.33333 11.3333 5.33333Z" stroke="#9333EA" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_3" d="M6 8.66667H4.66667C3.40959 8.66667 2.78105 8.66667 2.39053 9.0572C2 9.44773 2 10.0763 2 11.3333C2 12.5904 2 13.2189 2.39053 13.6095C2.78105 14 3.40959 14 4.66667 14H6V8.66667Z" stroke="#9333EA" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</svg>

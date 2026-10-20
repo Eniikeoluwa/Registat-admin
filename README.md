@@ -1,31 +1,24 @@
 # Registat Admin
 
-Base Next.js application for the Registat admin portal, using TypeScript, App Router, Tailwind CSS and ESLint.
+Standalone Next.js admin portal extracted from Registat-FE. The root URL redirects to `/admin/dashboard`, and all existing `/admin/...` URLs remain available.
 
-## Getting started
+## Run locally
 
-Use Node.js 22 or newer. From this directory:
+Use Node.js 22 or newer. Set `API_URL` in an untracked `.env.local` file to the Registat backend base URL, including `/v1`. The server uses `NEXT_PUBLIC_API_URL` only as a fallback.
 
 ```bash
 npm ci
 npm run dev
 ```
 
-Open http://localhost:3000.
+Open http://localhost:3000. Sign in with an existing admin account. Customer signup is handled by the customer app; this portal does not create admin accounts.
 
-## Commands
+## Checks
 
 ```bash
-npm run dev         # Start the development server
-npm run lint        # Run ESLint
-npm run type-check  # Generate route types and check TypeScript
-npm run build       # Create a production build
-npm start           # Serve the production build
+npm run lint
+npm run type-check
+npm run build
 ```
 
-## Structure
-
-- `src/app/` — Routes, root layout and global styles.
-- `@/*` — Import alias for `src/*`.
-
-This starter contains a placeholder home page. Authentication, API integration and admin features will be added separately.
+The portal includes its own auth routes, session guard, API proxy, admin pages, components, data, and assets. The backend must accept requests from this app's server through `API_URL`. Configure the deployment environment with the same variable before deploying.
