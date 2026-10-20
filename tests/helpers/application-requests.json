@@ -1,0 +1,243 @@
+[
+  {
+    "path": "dashboard",
+    "method": "GET",
+    "body": null,
+    "admin": false
+  },
+  {
+    "path": "applications",
+    "method": "POST",
+    "body": {
+      "serviceId": "507f1f77bcf86cd799439012",
+      "country": "NG"
+    },
+    "admin": false
+  },
+  {
+    "path": "applications",
+    "method": "GET",
+    "body": null,
+    "admin": false
+  },
+  {
+    "path": "applications/summary",
+    "method": "GET",
+    "body": null,
+    "admin": false
+  },
+  {
+    "path": "applications/507f1f77bcf86cd799439011",
+    "method": "GET",
+    "body": null,
+    "admin": false
+  },
+  {
+    "path": "applications/507f1f77bcf86cd799439011/trademark",
+    "method": "PATCH",
+    "body": {
+      "applicantType": "individual",
+      "applicant": {
+        "firstName": "Ada",
+        "lastName": "Example",
+        "email": "ada@example.com",
+        "phone": "+2348000000001"
+      },
+      "applicantAddress": {
+        "country": "NG",
+        "stateOrProvince": "Lagos",
+        "city": "Ikeja",
+        "postalCode": "100001",
+        "addressLine": "10 Example Road"
+      },
+      "markName": "Example",
+      "markType": "word_mark",
+      "niceClasses": [
+        35
+      ]
+    },
+    "admin": false
+  },
+  {
+    "path": "applications/507f1f77bcf86cd799439011/company-registration",
+    "method": "PATCH",
+    "body": {
+      "proposedName": "Example Limited",
+      "entityType": "private-limited",
+      "businessActivity": "Software services",
+      "registeredAddress": {
+        "country": "NG",
+        "stateOrProvince": "Lagos",
+        "city": "Ikeja",
+        "postalCode": "100001",
+        "addressLine": "10 Example Road"
+      },
+      "email": "business@example.com",
+      "phone": "+2348000000001",
+      "totalShares": 1000,
+      "shareValueMinor": 100,
+      "shareCurrency": "NGN",
+      "shareholders": [
+        {
+          "type": "individual",
+          "firstName": "Ada",
+          "lastName": "Example",
+          "email": "ada@example.com",
+          "phone": "+2348000000001",
+          "shares": 1000
+        }
+      ],
+      "directors": [
+        {
+          "firstName": "Ada",
+          "lastName": "Example",
+          "email": "ada@example.com",
+          "phone": "+2348000000001"
+        }
+      ],
+      "otherDocuments": []
+    },
+    "admin": false
+  },
+  {
+    "path": "applications/507f1f77bcf86cd799439011/business-licensing",
+    "method": "PATCH",
+    "body": {
+      "businessName": "Example Limited",
+      "businessType": "private-limited",
+      "industry": "Technology",
+      "businessAddress": {
+        "country": "NG",
+        "stateOrProvince": "Lagos",
+        "city": "Ikeja",
+        "postalCode": "100001",
+        "addressLine": "10 Example Road"
+      },
+      "contactPerson": {
+        "firstName": "Ada",
+        "lastName": "Example",
+        "email": "ada@example.com",
+        "phone": "+2348000000001",
+        "roleOrTitle": "Shareholder"
+      },
+      "licenceTypes": [
+        "Business permit"
+      ],
+      "documents": [
+        "507f1f77bcf86cd799439013"
+      ]
+    },
+    "admin": false
+  },
+  {
+    "path": "applications/507f1f77bcf86cd799439011/bank-account",
+    "method": "PATCH",
+    "body": {
+      "businessName": "Example Limited",
+      "registrationState": "registered",
+      "incorporationCountry": "NG",
+      "industry": "Technology",
+      "businessAddress": {
+        "country": "NG",
+        "stateOrProvince": "Lagos",
+        "city": "Ikeja",
+        "postalCode": "100001",
+        "addressLine": "10 Example Road"
+      },
+      "accountType": "business_current",
+      "preferredCurrencies": [
+        "USD",
+        "NGN"
+      ],
+      "documents": [
+        "507f1f77bcf86cd799439013"
+      ]
+    },
+    "admin": false
+  },
+  {
+    "path": "applications/507f1f77bcf86cd799439011/submit",
+    "method": "POST",
+    "body": null,
+    "admin": false
+  },
+  {
+    "path": "applications/507f1f77bcf86cd799439011/cancel",
+    "method": "POST",
+    "body": null,
+    "admin": false
+  },
+  {
+    "path": "applications/trademarks",
+    "method": "POST",
+    "body": {
+      "serviceId": "507f1f77bcf86cd799439012",
+      "countries": [
+        "NG",
+        "US"
+      ]
+    },
+    "admin": false
+  },
+  {
+    "path": "applications/trademarks/groups/507f1f77bcf86cd799439011",
+    "method": "GET",
+    "body": null,
+    "admin": false
+  },
+  {
+    "path": "applications/trademarks/groups/507f1f77bcf86cd799439011",
+    "method": "PATCH",
+    "body": {
+      "applicantType": "individual",
+      "applicant": {
+        "firstName": "Ada",
+        "lastName": "Example",
+        "email": "ada@example.com",
+        "phone": "+2348000000001"
+      },
+      "applicantAddress": {
+        "country": "NG",
+        "stateOrProvince": "Lagos",
+        "city": "Ikeja",
+        "postalCode": "100001",
+        "addressLine": "10 Example Road"
+      },
+      "markName": "Example",
+      "markType": "word_mark",
+      "niceClasses": [
+        35
+      ]
+    },
+    "admin": false
+  },
+  {
+    "path": "applications/trademarks/groups/507f1f77bcf86cd799439011/submit",
+    "method": "POST",
+    "body": null,
+    "admin": false
+  },
+  {
+    "path": "applications/admin",
+    "method": "GET",
+    "body": null,
+    "admin": true
+  },
+  {
+    "path": "applications/admin/507f1f77bcf86cd799439011",
+    "method": "GET",
+    "body": null,
+    "admin": true
+  },
+  {
+    "path": "applications/admin/507f1f77bcf86cd799439011/status",
+    "method": "PATCH",
+    "body": {
+      "status": "action_required",
+      "statusLabel": "More information needed",
+      "message": "Please review the company address.",
+      "notifyUser": true
+    },
+    "admin": true
+  }
+]

@@ -18,6 +18,7 @@ Open http://localhost:3000. Sign in with an existing admin account. Customer sig
 ```bash
 npm run lint
 npm run type-check
+npm test
 npm run build
 ```
 

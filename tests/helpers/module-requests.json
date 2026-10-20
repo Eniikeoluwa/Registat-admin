@@ -1,0 +1,336 @@
+[
+  {
+    "path": "documents/upload",
+    "method": "POST",
+    "body": null,
+    "admin": false,
+    "public": false
+  },
+  {
+    "path": "documents",
+    "method": "GET",
+    "body": null,
+    "admin": false,
+    "public": false
+  },
+  {
+    "path": "documents/507f1f77bcf86cd799439011/access-url",
+    "method": "GET",
+    "body": null,
+    "admin": false,
+    "public": false
+  },
+  {
+    "path": "companies",
+    "method": "GET",
+    "body": null,
+    "admin": false,
+    "public": false
+  },
+  {
+    "path": "companies/507f1f77bcf86cd799439011",
+    "method": "GET",
+    "body": null,
+    "admin": false,
+    "public": false
+  },
+  {
+    "path": "companies/admin",
+    "method": "GET",
+    "body": null,
+    "admin": true,
+    "public": false
+  },
+  {
+    "path": "companies/admin",
+    "method": "POST",
+    "body": {
+      "ownerUserId": "507f1f77bcf86cd799439011",
+      "name": "Example Limited",
+      "country": "NG",
+      "jurisdiction": "Lagos",
+      "entityType": "private-limited",
+      "email": "business@example.com",
+      "phone": "+2348000000001"
+    },
+    "admin": true,
+    "public": false
+  },
+  {
+    "path": "companies/admin/507f1f77bcf86cd799439011",
+    "method": "GET",
+    "body": null,
+    "admin": true,
+    "public": false
+  },
+  {
+    "path": "companies/admin/507f1f77bcf86cd799439011",
+    "method": "PATCH",
+    "body": {
+      "totalShares": 1
+    },
+    "admin": true,
+    "public": false
+  },
+  {
+    "path": "companies/admin/from-application/507f1f77bcf86cd799439011",
+    "method": "POST",
+    "body": {
+      "officialName": "Example Limited",
+      "registrationNumber": "RC-EXAMPLE-001",
+      "status": "active"
+    },
+    "admin": true,
+    "public": false
+  },
+  {
+    "path": "catalog",
+    "method": "GET",
+    "body": null,
+    "admin": false,
+    "public": true
+  },
+  {
+    "path": "catalog/admin",
+    "method": "GET",
+    "body": null,
+    "admin": true,
+    "public": false
+  },
+  {
+    "path": "catalog/nice-classes",
+    "method": "GET",
+    "body": null,
+    "admin": false,
+    "public": true
+  },
+  {
+    "path": "catalog/services/507f1f77bcf86cd799439011/forms/NG",
+    "method": "GET",
+    "body": null,
+    "admin": false,
+    "public": true
+  },
+  {
+    "path": "catalog/admin/countries",
+    "method": "GET",
+    "body": null,
+    "admin": true,
+    "public": false
+  },
+  {
+    "path": "catalog/admin/countries",
+    "method": "POST",
+    "body": {
+      "code": "NG",
+      "name": "Ada",
+      "currency": "USD"
+    },
+    "admin": true,
+    "public": false
+  },
+  {
+    "path": "catalog/admin/countries/507f1f77bcf86cd799439011",
+    "method": "GET",
+    "body": null,
+    "admin": true,
+    "public": false
+  },
+  {
+    "path": "catalog/admin/countries/507f1f77bcf86cd799439011",
+    "method": "PATCH",
+    "body": {
+      "name": "Ada"
+    },
+    "admin": true,
+    "public": false
+  },
+  {
+    "path": "catalog/admin/services",
+    "method": "GET",
+    "body": null,
+    "admin": true,
+    "public": false
+  },
+  {
+    "path": "catalog/admin/services",
+    "method": "POST",
+    "body": {
+      "workflowType": "trademark_registration",
+      "slug": "example",
+      "name": "Ada",
+      "referencePrefix": "REG",
+      "totalSteps": 1,
+      "supportedCountries": [
+        "NG"
+      ]
+    },
+    "admin": true,
+    "public": false
+  },
+  {
+    "path": "catalog/admin/services/507f1f77bcf86cd799439011",
+    "method": "GET",
+    "body": null,
+    "admin": true,
+    "public": false
+  },
+  {
+    "path": "catalog/admin/services/507f1f77bcf86cd799439011",
+    "method": "PATCH",
+    "body": {
+      "name": "Ada"
+    },
+    "admin": true,
+    "public": false
+  },
+  {
+    "path": "catalog/admin/forms",
+    "method": "GET",
+    "body": null,
+    "admin": true,
+    "public": false
+  },
+  {
+    "path": "catalog/admin/forms",
+    "method": "POST",
+    "body": {
+      "serviceId": "507f1f77bcf86cd799439012",
+      "country": "NG",
+      "version": 1,
+      "steps": [
+        {
+          "key": "company-details",
+          "title": "Company information",
+          "fields": [
+            {
+              "key": "proposedName",
+              "label": "Company name",
+              "type": "text"
+            }
+          ]
+        }
+      ],
+      "documentRequirements": [
+        {
+          "key": "other",
+          "label": "Other",
+          "category": "other",
+          "ownerScope": "application"
+        }
+      ]
+    },
+    "admin": true,
+    "public": false
+  },
+  {
+    "path": "catalog/admin/forms/507f1f77bcf86cd799439011",
+    "method": "GET",
+    "body": null,
+    "admin": true,
+    "public": false
+  },
+  {
+    "path": "catalog/admin/forms/507f1f77bcf86cd799439011",
+    "method": "PATCH",
+    "body": {
+      "steps": [
+        {
+          "key": "example",
+          "title": "Example",
+          "fields": [
+            {
+              "key": "example",
+              "label": "Example",
+              "type": "text"
+            }
+          ]
+        }
+      ]
+    },
+    "admin": true,
+    "public": false
+  },
+  {
+    "path": "catalog/currency-settings",
+    "method": "GET",
+    "body": null,
+    "admin": false,
+    "public": false
+  },
+  {
+    "path": "catalog/admin/currency-settings",
+    "method": "PATCH",
+    "body": {
+      "usd_to_ngn": "1500",
+      "ngn_to_usd": "1600"
+    },
+    "admin": true,
+    "public": false
+  },
+  {
+    "path": "catalog/admin/nice-classes",
+    "method": "POST",
+    "body": {
+      "number": 1,
+      "name": "Ada"
+    },
+    "admin": true,
+    "public": false
+  },
+  {
+    "path": "catalog/admin/nice-classes/507f1f77bcf86cd799439011",
+    "method": "PATCH",
+    "body": {
+      "name": "Ada"
+    },
+    "admin": true,
+    "public": false
+  },
+  {
+    "path": "catalog/admin/add-ons",
+    "method": "POST",
+    "body": {
+      "slug": "example",
+      "name": "Ada",
+      "category": "Example",
+      "amountMinor": 1,
+      "billingPeriod": "Example",
+      "applicableServiceIds": []
+    },
+    "admin": true,
+    "public": false
+  },
+  {
+    "path": "catalog/admin/add-ons/507f1f77bcf86cd799439011",
+    "method": "PATCH",
+    "body": {
+      "name": "Ada"
+    },
+    "admin": true,
+    "public": false
+  },
+  {
+    "path": "catalog/admin/fees",
+    "method": "POST",
+    "body": {
+      "serviceId": "507f1f77bcf86cd799439011",
+      "country": "NG",
+      "code": "example",
+      "label": "Example",
+      "amountMinor": 1,
+      "dueStage": "Example"
+    },
+    "admin": true,
+    "public": false
+  },
+  {
+    "path": "catalog/admin/fees/507f1f77bcf86cd799439011",
+    "method": "PATCH",
+    "body": {
+      "label": "Example"
+    },
+    "admin": true,
+    "public": false
+  }
+]
