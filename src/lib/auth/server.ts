@@ -18,7 +18,9 @@ export const REFRESH_COOKIE = "registat_refresh";
 const baseUrl = () => {
   const value = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL;
   if (!value) throw new Error("API_URL is not configured.");
-  return value.replace(/\/$/, "");
+  const url = new URL(value.trim());
+  if (!["http:", "https:"].includes(url.protocol) || url.username || url.password || url.search || url.hash) throw new Error("API_URL must be an HTTP(S) base URL without credentials, query, or fragment.");
+  return url.href.replace(/\/+$/, "");
 };
 export async function backend(path: string, method = "GET", body?: unknown, token?: string) {
   const multipart = typeof FormData !== "undefined" && body instanceof FormData;

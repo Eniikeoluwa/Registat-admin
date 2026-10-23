@@ -201,6 +201,211 @@
       }
     },
     {
+      "path": "payments/admin",
+      "method": "GET",
+      "admin": true,
+      "public": false,
+      "schema": null,
+      "query": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]*$",
+            "maxLength": 9
+          },
+          "limit": {
+            "type": "string",
+            "pattern": "^(?:[1-9]|[1-9][0-9]|100)$"
+          },
+          "applicationId": {
+            "type": "string",
+            "pattern": "^[a-fA-F0-9]{24}$"
+          },
+          "status": {
+            "enum": [
+              "initializing",
+              "pending",
+              "success",
+              "failed",
+              "abandoned",
+              "reversed",
+              "review_required"
+            ]
+          },
+          "currency": {
+            "enum": [
+              "USD",
+              "NGN"
+            ]
+          },
+          "userId": {
+            "type": "string",
+            "pattern": "^[a-fA-F0-9]{24}$"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "path": "payments/admin/{reference}",
+      "method": "GET",
+      "admin": true,
+      "public": false,
+      "schema": null,
+      "query": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "path": "payments/admin/{reference}/verify",
+      "method": "POST",
+      "admin": true,
+      "public": false,
+      "schema": null,
+      "query": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "path": "notifications",
+      "method": "GET",
+      "admin": false,
+      "public": false,
+      "schema": null,
+      "query": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]*$",
+            "maxLength": 9
+          },
+          "limit": {
+            "type": "string",
+            "pattern": "^(?:[1-9]|[1-9][0-9]|100)$"
+          },
+          "unreadOnly": {
+            "anyOf": [
+              {
+                "type": "string",
+                "const": "true"
+              },
+              {
+                "type": "string",
+                "const": "false"
+              }
+            ]
+          },
+          "companyId": {
+            "type": "string",
+            "pattern": "^[a-fA-F0-9]{24}$"
+          },
+          "type": {
+            "enum": [
+              "general",
+              "application_update",
+              "action_required",
+              "document_update",
+              "company_update",
+              "payment_update"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "path": "notifications/unread-count",
+      "method": "GET",
+      "admin": false,
+      "public": false,
+      "schema": null,
+      "query": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]*$",
+            "maxLength": 9
+          },
+          "limit": {
+            "type": "string",
+            "pattern": "^(?:[1-9]|[1-9][0-9]|100)$"
+          },
+          "unreadOnly": {
+            "anyOf": [
+              {
+                "type": "string",
+                "const": "true"
+              },
+              {
+                "type": "string",
+                "const": "false"
+              }
+            ]
+          },
+          "companyId": {
+            "type": "string",
+            "pattern": "^[a-fA-F0-9]{24}$"
+          },
+          "type": {
+            "enum": [
+              "general",
+              "application_update",
+              "action_required",
+              "document_update",
+              "company_update",
+              "payment_update"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "path": "notifications/{id}/read",
+      "method": "PATCH",
+      "admin": false,
+      "public": false,
+      "schema": null,
+      "query": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "path": "notifications/read-all",
+      "method": "PATCH",
+      "admin": false,
+      "public": false,
+      "schema": null,
+      "query": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "path": "notifications/admin",
+      "method": "POST",
+      "admin": true,
+      "public": false,
+      "schema": {
+        "$ref": "#/components/schemas/AdminCreateNotification"
+      },
+      "query": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
       "path": "documents/upload",
       "method": "POST",
       "admin": false,
@@ -9547,6 +9752,49 @@
           "maxItems": 30
         }
       }
+    },
+    "AdminCreateNotification": {
+      "type": "object",
+      "required": [
+        "userId",
+        "title",
+        "message"
+      ],
+      "properties": {
+        "userId": {
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{24}$"
+        },
+        "applicationId": {
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{24}$"
+        },
+        "companyId": {
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{24}$"
+        },
+        "type": {
+          "enum": [
+            "general",
+            "application_update",
+            "action_required",
+            "document_update",
+            "company_update",
+            "payment_update"
+          ]
+        },
+        "title": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 150
+        },
+        "message": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 1000
+        }
+      },
+      "additionalProperties": false
     }
   }
 }
