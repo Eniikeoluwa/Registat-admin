@@ -77,15 +77,22 @@ export async function POST(request: NextRequest, context: { params: Promise<{ ac
     const errors = validateAuth(name, body);
     if (Object.keys(errors).length) return json({ success: false, message: "Please correct the highlighted fields.", errors }, 422);
     const result = await backend(paths[name], "POST", body);
+    if (result.status >= 400) console.warn("[auth] Backend rejected request", { action: name, status: result.status, requestId: result.data.meta?.id });
     if (name === "login" && result.data.success && (!result.data.data?.user || !result.data.data?.accessToken || !result.data.data?.refreshToken)) return json({ success: false, message: "The authentication service returned an incomplete session. Please try again." }, 502);
-    if (name === "login" && result.data.success && result.data.data.user.role !== "admin") return json({ success: false, message: "Admin access is required." }, 403);
+    if (name === "login" && result.data.success && result.data.data.user.role !== "admin") {
+      console.warn("[auth] Login rejected: account does not have admin access");
+      return json({ success: false, message: "Admin access is required." }, 403);
+    }
     const payload = name === "login" && result.data.success ? { ...result.data, data: result.data.data?.user } : result.data;
     const response = json(payload, result.status);
     if (result.retryAfter) response.headers.set("Retry-After", result.retryAfter);
     if (name === "login" && result.data.success && result.data.data?.accessToken && result.data.data?.refreshToken) writeTokens(response, result.data.data);
     if (name === "reset-password" && result.data.success) clearTokens(response);
     return response;
-  } catch {
+  } catch (error) {
+    // Do not log request bodies, headers, tokens, error messages or stacks: they can contain credentials.
+    const failure = error as { name?: string; cause?: { code?: string } } | null;
+    console.error("[auth] Request failed before a backend response", { action, name: failure?.name, code: failure?.cause?.code });
     const response = unavailable();
     if (current?.tokens) writeTokens(response, current.tokens);
     return response;
