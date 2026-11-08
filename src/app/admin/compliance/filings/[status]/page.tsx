@@ -1,5 +1,4 @@
-import ComplianceWorkspace from '@/components/admin/ComplianceWorkspace';
-import type { FilingStatus } from '@/data/admin/compliance';
-import { notFound } from 'next/navigation';
-const values: Record<string, FilingStatus | 'All filings'> = { all: 'All filings', overdue: 'Overdue', 'action-required': 'Action Required', upcoming: 'Upcoming', compliant: 'Compliant', archived: 'Archived' };
-export default async function Page({ params }: { params: Promise<{ status: string }> }) { const { status } = await params; if (!values[status]) notFound(); return <ComplianceWorkspace key={status} view="list" selected={values[status]} />; }
+import { Suspense } from "react";
+import { notFound } from "next/navigation";
+import Compliance from "@/components/modules/Compliance";
+export default async function Page({ params }: { params: Promise<{ status: string }> }) { const { status } = await params; if (!["pending", "in_progress", "filed", "completed", "archived"].includes(status)) notFound(); return <Suspense fallback={<p className="p-8">Loading filings…</p>}><Compliance selected={status} /></Suspense>; }
