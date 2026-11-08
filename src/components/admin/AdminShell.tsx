@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useAccount, AccountInitials, LogoutButton } from "@/components/auth/AccountIdentity";
+import { can, sectionPermission } from "@/lib/auth/permissions";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { adminNavigation } from "@/data/admin/dashboard";
@@ -17,11 +18,11 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
   const [menuOpen, setMenuOpen] = useState(false);
   const [query, setQuery] = useState("");
   const searchRef = useRef<HTMLInputElement>(null);
-  const applicationSearch = useApi<AdminApplicationResponse[]>(query.trim() ? `applications/admin?search=${encodeURIComponent(query.trim().slice(0, 100))}&limit=6` : null);
   const account = useAccount();
-  const companySearch = useApi<AdminCompanyResponse[]>(query.trim() ? `companies/admin?search=${encodeURIComponent(query.trim().slice(0, 100))}&limit=6` : null);
+  const applicationSearch = useApi<AdminApplicationResponse[]>(query.trim() && can(account, "applications:read") ? `applications/admin?search=${encodeURIComponent(query.trim().slice(0, 100))}&limit=6` : null);
+  const companySearch = useApi<AdminCompanyResponse[]>(query.trim() && can(account, "companies:read") ? `companies/admin?search=${encodeURIComponent(query.trim().slice(0, 100))}&limit=6` : null);
   const companyMatches = companySearch.data || [];
-  const customerSearch = useApi<AdminUserResponse[]>(query.trim() ? `users/admin?search=${encodeURIComponent(query.trim().slice(0, 100))}&limit=6` : null);
+  const customerSearch = useApi<AdminUserResponse[]>(query.trim() && can(account, "users:read") ? `users/admin/customers?search=${encodeURIComponent(query.trim().slice(0, 100))}&limit=6` : null);
   const customerMatches = customerSearch.data || [];
   const matches = applicationSearch.data || [];
 
@@ -43,7 +44,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
     <aside className={`admin-sidebar ${menuOpen ? "is-open" : ""}`} aria-label="Admin sidebar">
       <Link href="/admin/dashboard" className="admin-brand" aria-label="Registat admin dashboard" onClick={() => setMenuOpen(false)}><AdminAsset name="logo" alt="Registat" /></Link>
       <nav aria-label="Admin navigation" className="admin-navigation">
-        {adminNavigation.map((group) => <div key={group.label} className="admin-nav-group"><p>{group.label}</p><div>{group.items.map((item) => {
+        {adminNavigation.map((group) => <div key={group.label} className="admin-nav-group"><p>{group.label}</p><div>{group.items.filter(item => !sectionPermission(item.path) || can(account, sectionPermission(item.path))).map((item) => {
           const active = pathname === item.path || pathname.startsWith(`${item.path}/`);
           return <Link key={item.path} href={item.path} aria-current={active ? "page" : undefined} className={`admin-nav-link ${active ? "is-active" : ""}`} onClick={() => setMenuOpen(false)}><AdminNavIcon name={item.icon} /><span>{item.label}</span></Link>;
         })}</div></div>)}

@@ -16,4 +16,4 @@ export function DataView({ data }: { data: unknown }) {
   if (typeof data === "object") return <dl className="space-y-3">{Object.entries(data).filter(([key]) => !["_id", "__v", "ownerUserId", "createdBy", "updatedBy"].includes(key)).map(([key, value]) => <div key={key}><dt className="text-xs font-semibold capitalize text-slate-500">{key.replace(/([a-z])([A-Z])/g, "$1 $2").replaceAll("_", " ")}</dt><dd className="mt-1 break-words text-sm"><DataView data={value} /></dd></div>)}</dl>;
   return <span>{String(data)}</span>;
 }
-export function money(amount: number, currency = "USD") { return new Intl.NumberFormat("en", { style: "currency", currency }).format(amount / 100); }
+export { money } from "@/lib/api/money";

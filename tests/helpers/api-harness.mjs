@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import { createHmac } from 'node:crypto';
 import vm from 'node:vm';
 import path from 'node:path';
 import { createRequire } from 'node:module';
@@ -9,11 +10,12 @@ const requireRuntime = createRequire(import.meta.url);
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 export const { NextRequest } = requireRuntime('next/server');
 export const user = { _id: '507f1f77bcf86cd799439011', name: 'Test User', email: 'test@example.com', role: 'user', isEmailVerified: true, accountStatus: 'active' };
-export function harness(replies, role = 'user', env = { API_URL: 'https://backend.test/v1', NODE_ENV: 'test' }) {
+export function harness(replies, role = 'user', env = { API_URL: 'https://backend.test/v1', NODE_ENV: 'test' }, settings = {}) {
   const calls = [], modules = new Map();
   const fetch = async (url, options) => {
     calls.push({ url, ...options });
-    if (url.endsWith('/users/me')) return Response.json({ success: true, data: { ...user, role } });
+    if (url.endsWith('/users/me') && options.method === 'GET' && settings.profileReplies?.length) { const profile = settings.profileReplies.shift(); if (profile instanceof Error) throw profile; return Response.json(profile.body, { status: profile.status || 200 }); }
+    if (url.endsWith('/users/me') && options.method === 'GET') return Response.json({ success: true, data: { ...user, role, ...(settings.subAdminRole ? { subAdminRole: settings.subAdminRole } : {}) } });
     const reply = replies.shift(); assert.ok(reply, `Unexpected request ${url}`);
     if (reply instanceof Error) throw reply;
     return Response.json(reply.body, { status: reply.status || 200, headers: reply.headers });
@@ -30,7 +32,13 @@ export function harness(replies, role = 'user', env = { API_URL: 'https://backen
   }
   return { load, handle: load('src/app/api/registat/[...path]/route.ts').GET, validation: load('src/lib/api/validation.ts'), calls };
 }
-export function request(path, method = 'GET', body, authenticated = true, origin = 'http://localhost:3000') {
-  return new NextRequest(`http://localhost:3000/api/registat/${path}`, { method, headers: { origin, ...(authenticated ? { cookie: 'registat_access=access-token' } : {}), ...(body !== undefined && !(body instanceof FormData) ? { 'Content-Type': 'application/json' } : {}) }, ...(body !== undefined ? { body: body instanceof FormData ? body : JSON.stringify(body) } : {}) });
+export function request(path, method = 'GET', body, authenticated = true, origin = 'http://localhost:3000', identity = { ...user, role: 'superAdmin' }, permissions = JSON.parse(fs.readFileSync(pathModuleFile(), 'utf8')).schemas.AdminPermission.enum) {
+  return new NextRequest(`http://localhost:3000/api/registat/${path}`, { method, headers: { origin, ...(authenticated ? { cookie: sessionCookies(identity, permissions) } : {}), ...(body !== undefined && !(body instanceof FormData) ? { 'Content-Type': 'application/json' } : {}) }, ...(body !== undefined ? { body: body instanceof FormData ? body : JSON.stringify(body) } : {}) });
 }
 export const context = path => ({ params: Promise.resolve({ path: path.split('?')[0].split('/') }) });
+
+function pathModuleFile() { return path.join(root, 'src/lib/api/contracts.json'); }
+export function sessionCookies(identity, permissions) {
+  const body = Buffer.from(JSON.stringify({ id: identity._id, role: identity.role, assignment: identity.subAdminRole, permissions })).toString('base64url');
+  return `registat_access=access-token; registat_refresh=refresh-token; registat_permissions=${body}.${createHmac('sha256', 'refresh-token').update(body).digest('base64url')}`;
+}

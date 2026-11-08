@@ -1,16 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
 import { backend, session, writeTokens, clearTokens, type Session } from "@/lib/auth/server";
+import { isStaff } from "@/lib/auth/permissions";
 import { validateAuth, type AuthAction, type Fields } from "@/lib/auth/validation";
 
-const paths: Record<AuthAction, string> = { signup: "/auth/signup/user", login: "/auth/login", verify: "/auth/verify", "resend-verification": "/auth/resend-verification", "forgot-password": "/auth/forgot-password", "reset-password": "/auth/reset-password", "change-password": "/users/change-password" };
-const fields: Record<AuthAction, string[]> = { signup: ["name", "email", "phone", "password"], login: ["email", "password"], verify: ["token", "otp"], "resend-verification": ["email"], "forgot-password": ["email"], "reset-password": ["token", "otp", "newPassword"], "change-password": ["oldPassword", "newPassword"] };
+const paths: Record<AuthAction, string> = { signup: "/auth/signup/user", login: "/auth/admin-login", verify: "/auth/verify", "resend-verification": "/auth/resend-verification", "forgot-password": "/auth/forgot-password", "reset-password": "/auth/reset-password", "change-password": "/users/change-password" };
+const fields: Record<AuthAction, string[]> = { signup: ["name", "email", "phone", "password"], login: ["email", "password"], verify: ["email", "token", "code"], "resend-verification": ["email"], "forgot-password": ["email"], "reset-password": ["email", "token", "code", "password"], "change-password": ["oldPassword", "newPassword"] };
 function json(body: unknown, status = 200) { return NextResponse.json(body, { status, headers: { "Cache-Control": "no-store" } }); }
 function unavailable() { return json({ success: false, message: "The authentication service is unavailable. Please try again shortly." }, 503); }
 export async function GET(request: NextRequest, context: { params: Promise<{ action: string }> }) {
   if ((await context.params).action !== "session") return json({ success: false, message: "Not found." }, 404);
   try {
     const current = await session(request);
-    const admin = current.user?.role === "admin";
+    const admin = isStaff(current.user);
     const response = json({ success: admin, ...(admin ? { data: current.user } : { message: current.user ? "Admin access is required." : current.status >= 500 ? "Authentication is temporarily unavailable." : "Please log in to continue." }) }, admin ? 200 : current.user ? 403 : current.status);
     if (current.tokens) writeTokens(response, current.tokens);
     if (current.retryAfter) response.headers.set("Retry-After", current.retryAfter);
@@ -53,7 +54,7 @@ export async function POST(request: NextRequest, context: { params: Promise<{ ac
         if ([401, 403].includes(current.status)) clearTokens(response);
         return response;
       }
-      if (current.user.role !== "admin") return json({ success: false, message: "Admin access is required." }, 403);
+      if (!isStaff(current.user)) return json({ success: false, message: "Admin access is required." }, 403);
       if (action === "refresh") { const response = json({ success: true, data: current.user }); if (current.tokens) writeTokens(response, current.tokens); return response; }
       const body = await request.json().catch(() => null);
       const errors = validateAuth("change-password", body && typeof body === "object" ? Object.fromEntries(Object.entries(body).filter(([, value]) => typeof value === "string")) as Fields : {});
@@ -78,15 +79,15 @@ export async function POST(request: NextRequest, context: { params: Promise<{ ac
     if (Object.keys(errors).length) return json({ success: false, message: "Please correct the highlighted fields.", errors }, 422);
     const result = await backend(paths[name], "POST", body);
     if (result.status >= 400) console.warn("[auth] Backend rejected request", { action: name, status: result.status, requestId: result.data.meta?.id });
-    if (name === "login" && result.data.success && (!result.data.data?.user || !result.data.data?.accessToken || !result.data.data?.refreshToken)) return json({ success: false, message: "The authentication service returned an incomplete session. Please try again." }, 502);
-    if (name === "login" && result.data.success && result.data.data.user.role !== "admin") {
+    if (name === "login" && result.data.success && (!result.data.data?.user || !result.data.data?.accessToken || !result.data.data?.refreshToken || !Array.isArray(result.data.data?.permissions))) return json({ success: false, message: "The authentication service returned an incomplete session. Please try again." }, 502);
+    if (name === "login" && result.data.success && !isStaff(result.data.data.user)) {
       console.warn("[auth] Login rejected: account does not have admin access");
       return json({ success: false, message: "Admin access is required." }, 403);
     }
-    const payload = name === "login" && result.data.success ? { ...result.data, data: result.data.data?.user } : result.data;
+    const payload = name === "login" && result.data.success ? { ...result.data, data: { ...result.data.data?.user, permissions: result.data.data.permissions } } : result.data;
     const response = json(payload, result.status);
     if (result.retryAfter) response.headers.set("Retry-After", result.retryAfter);
-    if (name === "login" && result.data.success && result.data.data?.accessToken && result.data.data?.refreshToken) writeTokens(response, result.data.data);
+    if (name === "login" && result.data.success && result.data.data?.accessToken && result.data.data?.refreshToken) writeTokens(response, { ...result.data.data, identity: { ...result.data.data.user, permissions: result.data.data.permissions } });
     if (name === "reset-password" && result.data.success) clearTokens(response);
     return response;
   } catch (error) {

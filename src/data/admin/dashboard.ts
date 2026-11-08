@@ -11,6 +11,7 @@ export const adminNavigation = [
     { label: "Services & Pricing", path: "/admin/services", icon: "services" },
     { label: "Jurisdictions", path: "/admin/jurisdictions", icon: "globe" },
     { label: "Compliance", path: "/admin/compliance", icon: "compliance", badge: true },
+    { label: "Documents", path: "/admin/documents", icon: "inbox" },
   ] },
   { label: "ACCOUNT", items: [{ label: "Settings", path: "/admin/settings", icon: "gear" }] },
 ];

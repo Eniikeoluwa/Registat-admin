@@ -9,7 +9,7 @@ const adminFixtures = [...applicationFixtures, ...moduleFixtures].filter(item =>
 
 for (const fixture of adminFixtures) {
   test(`${fixture.method} ${fixture.path} forwards an admin request`, async () => {
-    const { handle, calls } = harness([{ body: { success: true, data: { _id: '507f1f77bcf86cd799439011' } } }], 'admin');
+    const { handle, calls } = harness([{ body: { success: true, data: { _id: '507f1f77bcf86cd799439011' } } }], 'superAdmin');
     const response = await handle(request(fixture.path, fixture.method, fixture.body ?? undefined), context(fixture.path));
     assert.equal(response.status, 200);
     assert.equal(calls.at(-1).url, `https://backend.test/v1/${fixture.path}`);
