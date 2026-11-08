@@ -1,6 +1,5 @@
 import fs from 'node:fs';
 
-// Accept a saved specification so syncing can also run without network access.
 const spec = process.argv[2]
   ? JSON.parse(fs.readFileSync(process.argv[2], 'utf8'))
   : await fetch('https://registat-be.onrender.com/v1/registat/openapi.json').then(response => {
@@ -8,36 +7,37 @@ const spec = process.argv[2]
     return response.json();
   });
 const file = new URL('../src/lib/api/contracts.json', import.meta.url);
-const contracts = JSON.parse(fs.readFileSync(file, 'utf8'));
-// Keep the portal's explicit allowlist; include the newly supported admin modules.
-const allowed = new Set(contracts.routes.map(route => `${route.method} ${route.path}`));
+const previous = JSON.parse(fs.readFileSync(file, 'utf8'));
+const allowed = new Set(previous.routes.map(route => `${route.method} ${route.path}`));
 const routes = [];
 for (const [path, operations] of Object.entries(spec.paths)) {
   if (!path.startsWith('/v1/')) continue;
   const localPath = path.slice(4);
   for (const [method, operation] of Object.entries(operations)) {
+    if (!['get', 'post', 'patch', 'put', 'delete'].includes(method)) continue;
     const verb = method.toUpperCase();
-    if (!allowed.has(`${verb} ${localPath}`) && !localPath.startsWith('notifications') && !localPath.startsWith('payments/admin')) continue;
-    const parameters = [...(operations.parameters || []), ...(operation.parameters || [])].filter(parameter => parameter.in === 'query');
-    routes.push({ path: localPath, method: verb, admin: operation['x-access'] === 'admin', public: operation.security?.length === 0, schema: operation.requestBody?.content?.['application/json']?.schema || null, query: { type: 'object', properties: Object.fromEntries(parameters.map(parameter => [parameter.name, parameter.schema])), ...(parameters.some(parameter => parameter.required) ? { required: parameters.filter(parameter => parameter.required).map(parameter => parameter.name) } : {}), additionalProperties: false } });
+    // Authentication stays behind its dedicated cookie/token boundary.
+    if (localPath.startsWith('auth/') && localPath !== 'auth/create-sub-admin') continue;
+    if (!allowed.has(`${verb} ${localPath}`) && !localPath.includes('/admin') && !localPath.startsWith('notifications') && localPath !== 'users/me' && localPath !== 'auth/create-sub-admin') continue;
+    const parameters = [...(operations.parameters || []), ...(operation.parameters || [])];
+    const query = parameters.filter(parameter => parameter.in === 'query');
+    const body = operation.requestBody?.content;
+    const permissions = [...new Set([operation['x-required-permission'], operation['x-permission'], ...(operation['x-required-permissions'] || []), ...(operation['x-permissions'] || [])].filter(Boolean))];
+    routes.push({ path: localPath, method: verb, admin: localPath.includes('/admin') || operation['x-access'] === 'admin', public: operation.security?.length === 0, permissions, roles: operation['x-required-roles'] || [], schema: body?.['application/json']?.schema || null, multipart: body?.['multipart/form-data']?.schema || null, params: Object.fromEntries(parameters.filter(parameter => parameter.in === 'path').map(parameter => [parameter.name, parameter.schema])), query: { type: 'object', properties: Object.fromEntries(query.map(parameter => [parameter.name, parameter.schema])), ...(query.some(parameter => parameter.required) ? { required: query.filter(parameter => parameter.required).map(parameter => parameter.name) } : {}), additionalProperties: false } });
   }
 }
-for (const route of contracts.routes) {
-  if (!routes.some(item => item.path === route.path && item.method === route.method)) throw new Error(`Documented endpoint missing: ${route.method} ${route.path}`);
+fs.writeFileSync(file, JSON.stringify({ routes, schemas: spec.components.schemas }, null, 2) + '\n');
+function type(schema) {
+  if (!schema) return 'unknown';
+  if (schema.$ref) return schema.$ref.split('/').pop();
+  if (schema.const !== undefined) return JSON.stringify(schema.const);
+  if (schema.enum) return schema.enum.map(value => JSON.stringify(value)).join(' | ');
+  let base = schema.type === 'object' || schema.properties ? `{ ${Object.entries(schema.properties || {}).map(([key, value]) => `${JSON.stringify(key)}${schema.required?.includes(key) ? '' : '?'}: ${type(value)}`).join('; ')}${schema.patternProperties ? `; [key: string]: ${type(Object.values(schema.patternProperties)[0])}` : schema.additionalProperties ? `; [key: string]: ${schema.additionalProperties === true ? 'unknown' : type(schema.additionalProperties)}` : ''} }` : schema.type === 'array' ? `Array<${type(schema.items)}>` : ['integer', 'number'].includes(schema.type) ? 'number' : ['string', 'boolean', 'null'].includes(schema.type) ? schema.type : 'unknown';
+  if (base.trim() === "{  }") base = "Record<string, never>";
+  if (schema.anyOf) {
+    const union = schema.anyOf.map(type).join(' | ');
+    base = base === 'unknown' ? `(${union})` : `(${base} & (${union}))`;
+  }
+  return base.replace(/\{ ;/g, "{ ");
 }
-const schemas = {};
-function includeSchema(name) {
-  if (schemas[name]) return;
-  const schema = spec.components.schemas[name];
-  if (!schema) throw new Error(`Documented schema missing: ${name}`);
-  schemas[name] = schema;
-  includeReferences(schema);
-}
-function includeReferences(value) {
-  if (!value || typeof value !== 'object') return;
-  if (value.$ref?.startsWith('#/components/schemas/')) includeSchema(value.$ref.split('/').pop());
-  for (const child of Object.values(value)) includeReferences(child);
-}
-for (const name of Object.keys(contracts.schemas)) includeSchema(name);
-for (const route of routes) includeReferences(route);
-fs.writeFileSync(file, JSON.stringify({ routes, schemas }, null, 2) + '\n');
+fs.writeFileSync(new URL('../src/lib/api/types.ts', import.meta.url), '// Generated by scripts/sync-api-contracts.mjs. Do not edit by hand.\n' + Object.entries(spec.components.schemas).map(([name, schema]) => `export type ${name} = ${type(schema)};`).join('\n') + '\n');

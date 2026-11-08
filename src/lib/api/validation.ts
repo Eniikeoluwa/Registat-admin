@@ -1,5 +1,5 @@
 import contracts from "./contracts.json";
-export type Schema = { $ref?: string; type?: string; const?: unknown; enum?: unknown[]; anyOf?: Schema[]; properties?: Record<string, Schema>; required?: string[]; additionalProperties?: boolean; minProperties?: number; items?: Schema; minItems?: number; maxItems?: number; uniqueItems?: boolean; minLength?: number; maxLength?: number; minimum?: number; maximum?: number; pattern?: string; format?: string };
+export type Schema = { $ref?: string; type?: string; const?: unknown; enum?: unknown[]; anyOf?: Schema[]; properties?: Record<string, Schema>; required?: string[]; additionalProperties?: boolean; minProperties?: number; items?: Schema; minItems?: number; maxItems?: number; uniqueItems?: boolean; minLength?: number; maxLength?: number; minimum?: number; maximum?: number; pattern?: string; format?: string; allOf?: Schema[]; if?: Schema; then?: Schema; else?: Schema; not?: Schema };
 export const schemas = contracts.schemas as unknown as Record<string, Schema>;
 export const resolve = (schema: Schema): Schema => schema.$ref ? schemas[schema.$ref.split("/").pop()!] : schema;
 export const label = (key: string) => key.replace(/Minor$/, " (smallest currency unit)").replace(/([a-z])([A-Z])/g, "$1 $2").replaceAll("_", " ").replace(/^./, c => c.toUpperCase());
@@ -8,11 +8,18 @@ export function validate(schemaInput: Schema, value: unknown, path = ""): Record
   const fail = (message: string) => { errors[path || "form"] = message; };
   if (schema.anyOf) {
     const choices = schema.anyOf.map(choice => validate(choice, value, path));
-    return choices.find(result => !Object.keys(result).length) || choices.sort((a, b) => Object.keys(a).length - Object.keys(b).length)[0];
+    Object.assign(errors, choices.find(result => !Object.keys(result).length) || choices.sort((a, b) => Object.keys(a).length - Object.keys(b).length)[0]);
   }
+  for (const constraint of schema.allOf || []) Object.assign(errors, validate(constraint, value, path));
+  if (schema.if) {
+    const branch = Object.keys(validate(schema.if, value, path)).length ? schema.else : schema.then;
+    if (branch) Object.assign(errors, validate(branch, value, path));
+  }
+  if (schema.not && !Object.keys(validate(schema.not, value, path)).length) fail("These fields cannot be combined.");
+  if (schema.type === "null" && value !== null) fail("Clear this value.");
   if (schema.const !== undefined && value !== schema.const) fail(`Choose ${label(String(schema.const))}.`);
   if (schema.enum && !schema.enum.includes(value)) fail("Choose one of the available options.");
-  if (schema.type === "object") {
+  if (schema.type === "object" || schema.properties || schema.required) {
     if (!value || typeof value !== "object" || Array.isArray(value)) { fail("Enter the required details."); return errors; }
     const object = value as Record<string, unknown>;
     if (schema.minProperties && Object.keys(object).length < schema.minProperties) fail("Enter at least one field to save.");
@@ -28,6 +35,8 @@ export function validate(schemaInput: Schema, value: unknown, path = ""): Record
     if (schema.minLength !== undefined && value.trim().length < schema.minLength) fail(`Use at least ${schema.minLength} characters.`);
     if (schema.maxLength !== undefined && value.length > schema.maxLength) fail(`Use no more than ${schema.maxLength} characters.`);
     if (schema.pattern && !new RegExp(schema.pattern).test(value)) fail("Enter a value in the required format.");
+    if (schema.format === "uuid" && !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(value)) fail("Enter a valid verification token.");
+    if (schema.format === "date" && (!/^\d{4}-\d{2}-\d{2}$/.test(value) || !Number.isFinite(Date.parse(value)) || new Date(value).toISOString().slice(0, 10) !== value)) fail("Enter a valid date.");
     if (schema.format === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) fail("Enter a valid email address.");
     if (schema.format === "capitalized-mark-name" && !/^\p{Lu}/u.test(value)) fail("Start the mark name with an uppercase letter.");
     if (schema.format === "date-time" && (!/^\d{4}-\d{2}-\d{2}T/.test(value) || !Number.isFinite(Date.parse(value)))) fail("Enter a valid date and time.");
@@ -47,7 +56,13 @@ export function validate(schemaInput: Schema, value: unknown, path = ""): Record
   return errors;
 }
 export function matchContract(path: string, method: string) {
-  return contracts.routes.find(route => route.method === method && new RegExp("^" + route.path.replace(/\{id\}/g, "[a-fA-F0-9]{24}").replace(/\{country\}/g, "[A-Z]{2}").replace(/\{reference\}/g, "REGPAY-[a-f0-9]{32}") + "$").test(path));
+  return contracts.routes.find(route => {
+    if (route.method !== method) return false;
+    const names: string[] = [];
+    const pattern = route.path.split("/").map(segment => segment.startsWith("{") ? (names.push(segment.slice(1, -1)), "([^/]+)") : segment.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("/");
+    const match = new RegExp(`^${pattern}$`).exec(path);
+    return !!match && names.every((name, index) => !Object.keys(validate((route.params as Record<string, Schema>)[name] || {}, match[index + 1])).length);
+  });
 }
 export function draftRules(workflow: string) {
   const keys: Record<string, string> = { company_registration: "CompanyRegistration", trademark_registration: "Trademark", business_licensing: "BusinessLicensing", bank_account_opening: "BankAccount" };

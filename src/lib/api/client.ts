@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { useAccount } from "@/components/auth/AccountIdentity";
 import type { PaginationMetaResponse } from "./types";
-export type Result<T> = { success: boolean; message: string; data: T; meta?: { pagination: PaginationMetaResponse } };
+export type Result<T> = { success: boolean; message: string; data: T; meta?: { pagination?: PaginationMetaResponse; range?: { after: string; before: string; domain?: string }; [key: string]: unknown } };
 export class ApiError extends Error {
   constructor(message: string, public status: number, public errors: Record<string, string> = {}) { super(message); }
 }
@@ -32,5 +32,5 @@ export function useApi<T>(path: string | null) {
     api<T>(path, { signal: controller.signal }).then(result => { if (!controller.signal.aborted) setState({ key, result }); }).catch(error => { if (!controller.signal.aborted) setState({ key, error: error instanceof Error ? error.message : "Unable to load data." }); });
     return () => controller.abort();
   }, [path, key]);
-  return { data: state.key === key ? state.result?.data : undefined, pagination: state.key === key ? state.result?.meta?.pagination : undefined, error: state.key === key ? state.error : undefined, loading: !!path && (state.key !== key || (!state.result && !state.error)), reload: () => setRevision(value => value + 1) };
+  return { meta: state.key === key ? state.result?.meta : undefined, data: state.key === key ? state.result?.data : undefined, pagination: state.key === key ? state.result?.meta?.pagination : undefined, error: state.key === key ? state.error : undefined, loading: !!path && (state.key !== key || (!state.result && !state.error)), reload: () => setRevision(value => value + 1) };
 }
