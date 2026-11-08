@@ -18,17 +18,17 @@ test('login preserves backend account rejection instead of reporting an outage',
 });
 
 test('customer login explains the admin requirement', async () => {
-  const response = await login({ body: { success: true, data: { user, accessToken: 'access', refreshToken: 'refresh' } } });
+  const response = await login({ body: { success: true, data: { user, accessToken: 'access', refreshToken: 'refresh', permissions: ['dashboard:read', 'users:read'] } } });
   assert.equal(response.status, 403);
   assert.equal((await response.json()).message, 'Admin access is required.');
   assert.equal(response.headers.get('set-cookie'), null);
 });
 
 test('admin login stores credentials in cookies without exposing tokens in the response', async () => {
-  const response = await login({ body: { success: true, data: { user: { ...user, role: 'admin' }, accessToken: 'access', refreshToken: 'refresh' } } });
+  const response = await login({ body: { success: true, data: { user: { ...user, role: 'superAdmin' }, accessToken: 'access', refreshToken: 'refresh', permissions: ['dashboard:read', 'users:read'] } } });
   assert.equal(response.status, 200);
   const body = await response.json();
-  assert.equal(body.data.role, 'admin');
+  assert.equal(body.data.role, 'superAdmin');
   assert.equal(body.data.accessToken, undefined);
   assert.match(response.headers.get('set-cookie'), /HttpOnly/i);
 });

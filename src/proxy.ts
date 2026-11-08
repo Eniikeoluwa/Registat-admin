@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { isStaff, can, sectionPermission, landingPage } from "@/lib/auth/permissions";
 import { clearTokens, session, writeTokens } from "@/lib/auth/server";
 
 export async function proxy(request: NextRequest) {
@@ -17,9 +18,15 @@ export async function proxy(request: NextRequest) {
       clearTokens(response);
       return response;
     }
-    if (current.user.role !== "admin") {
+    if (!isStaff(current.user)) {
       const response = new NextResponse("Admin access is required.", { status: 403, headers: { "Cache-Control": "no-store" } });
       clearTokens(response);
+      return response;
+    }
+    const permission = sectionPermission(request.nextUrl.pathname);
+    if (permission && !can(current.user, permission)) {
+      const response = NextResponse.redirect(new URL(landingPage(current.user), request.url));
+      if (current.tokens) writeTokens(response, current.tokens);
       return response;
     }
     const response = NextResponse.next();

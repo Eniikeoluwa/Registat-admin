@@ -1,6 +1,8 @@
-export type AuthUser = { _id: string; name: string; email: string; phone?: string; role: string; isEmailVerified: boolean; isPhoneVerified?: boolean; accountStatus: string };
+import type { AuthUser as ServerUser } from "./server";
+export type AuthUser = ServerUser;
+export type Challenge = { token: string; email: string; type: string };
 export class AuthError extends Error {
-  constructor(message: string, public status: number, public errors: Record<string, string> = {}) { super(message); }
+  constructor(message: string, public status: number, public errors: Record<string, string> = {}, public data?: Challenge) { super(message); }
 }
 export async function authRequest<T = AuthUser>(action: string, body?: Record<string, string>, method = "POST"): Promise<{ success: boolean; message: string; data: T }> {
   let response: Response;
@@ -15,10 +17,22 @@ export async function authRequest<T = AuthUser>(action: string, body?: Record<st
       for (const [key, value] of Object.entries(result.errors)) if (typeof value === "string") errors[key] = value;
     }
     const retry = response.headers.get("Retry-After");
-    throw new AuthError(response.status === 429 ? `Too many attempts. ${retry ? `Try again in ${retry} seconds.` : "Please try again later."}` : result?.message || "The request could not be completed. Please try again.", response.status, errors);
+    throw new AuthError(response.status === 429 ? `Too many attempts. ${retry ? `Try again in ${retry} seconds.` : "Please try again later."}` : result?.message || "The request could not be completed. Please try again.", response.status, errors, result?.data);
   }
   return result;
 }
 export function rememberEmail(email: string) { try { sessionStorage.setItem("registat:signup", JSON.stringify({ email })); } catch { /* Email storage is optional; authentication must still work. */ } }
 
 export function forgetEmail() { try { sessionStorage.removeItem("registat:signup"); } catch { /* Storage may be unavailable in private browser modes. */ } }
+
+const challenges = new Map<string, Challenge>();
+export function rememberChallenge(value: Challenge, purpose = "verify") {
+  challenges.set(purpose, value);
+  try { sessionStorage.setItem(`registat:${purpose}`, JSON.stringify(value)); } catch { /* Use the in-memory challenge if storage is unavailable. */ }
+  if (typeof window !== "undefined") window.dispatchEvent(new Event("registat:challenge"));
+}
+export function readChallenge(purpose = "verify"): Challenge | null {
+  try { const stored = JSON.parse(sessionStorage.getItem(`registat:${purpose}`) || "null"); if (stored?.token && stored?.email) return stored; } catch { /* Use the current in-memory challenge. */ }
+  return challenges.get(purpose) || null;
+}
+export function clearChallenge(purpose = "verify") { challenges.delete(purpose); try { sessionStorage.removeItem(`registat:${purpose}`); } catch {} }

@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { useAuthReturnTo } from "./useAuthReturnTo";
-import { authRequest, AuthError, rememberEmail } from "@/lib/auth/client";
+import { authRequest, AuthError, rememberEmail, rememberChallenge } from "@/lib/auth/client";
 import { validateAuth, safeReturnTo, authHref } from "@/lib/auth/validation";
+import { can, sectionPermission, landingPage } from "@/lib/auth/permissions";
 import { useRouter } from "next/navigation";
 import {
   type ChangeEvent,
@@ -92,12 +93,17 @@ export default function LoginForm() {
     setBusy(true);
     try {
       const result = await authRequest("login", values);
-      router.replace(safeReturnTo(new URLSearchParams(window.location.search).get("next"), result.data.role));
+      const next = safeReturnTo(new URLSearchParams(window.location.search).get("next"), result.data.role);
+      const permission = sectionPermission(next);
+      router.replace(permission && !can(result.data, permission) ? landingPage(result.data) : next);
       router.refresh();
     } catch (error) {
       setError(error instanceof Error ? error.message : "Unable to log in.");
       if (error instanceof AuthError) { setFieldErrors(error.errors); if (error.errors.email) setEmailError(error.errors.email); }
-      if (error instanceof AuthError && error.status === 403) rememberEmail(values.email);
+      if (error instanceof AuthError && error.status === 403) {
+        rememberEmail(values.email);
+        if (error.data?.token && error.data.email) { rememberChallenge(error.data); router.push(authHref("/verify", returnTo)); }
+      }
     } finally { setBusy(false); }
   };
 

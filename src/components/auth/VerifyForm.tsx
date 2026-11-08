@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useAuthReturnTo } from "./useAuthReturnTo";
-import { authRequest, rememberEmail, forgetEmail } from "@/lib/auth/client";
+import { authRequest, rememberEmail, forgetEmail, rememberChallenge, readChallenge, clearChallenge, type Challenge } from "@/lib/auth/client";
 import { tokenValid, emailValid, authHref } from "@/lib/auth/validation";
 import { useRouter } from "next/navigation";
 import {
@@ -22,13 +22,16 @@ const PLACEHOLDER_EMAIL = "you@example.com";
 
 type StoredSignup = { email?: string };
 
-function subscribe() {
-  return () => {};
+function subscribe(listener: () => void) {
+  window.addEventListener("registat:challenge", listener);
+  return () => window.removeEventListener("registat:challenge", listener);
 }
 
 function getEmailSnapshot(): string {
   if (typeof window === "undefined") return PLACEHOLDER_EMAIL;
   try {
+    const challenge = readChallenge();
+    if (challenge?.email) return challenge.email;
     const raw = window.sessionStorage.getItem("registat:signup");
     if (!raw) return new URLSearchParams(window.location.search).get("email") || PLACEHOLDER_EMAIL;
     const parsed = JSON.parse(raw) as StoredSignup;
@@ -59,7 +62,7 @@ export default function VerifyForm() {
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
   const [resendEmail, setResendEmail] = useState("");
-  const token = useSyncExternalStore(subscribe, () => new URLSearchParams(window.location.search).get("token") || "", () => "");
+  const token = useSyncExternalStore(subscribe, () => readChallenge()?.token || "", () => "");
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   useEffect(() => {
@@ -147,10 +150,11 @@ export default function VerifyForm() {
     e.preventDefault();
     if (!canSubmit || busy) return;
     setError(""); setNotice("");
-    if (!tokenValid(token)) { setError("This verification link is incomplete. Please contact support for help verifying your email."); return; }
+    if (!tokenValid(token)) { setError("Request a new verification code to continue."); return; }
     setBusy(true);
     try {
-      await authRequest("verify", { token, otp: code });
+      await authRequest("verify", { email, token, code });
+      clearChallenge();
       forgetEmail();
       router.replace(authHref("/login", returnTo, { verified: "1" }));
     } catch (error) { setError(error instanceof Error ? error.message : "Unable to verify your email."); }
@@ -164,8 +168,9 @@ export default function VerifyForm() {
     if (!emailValid(targetEmail)) { setError("Enter your account email address to resend your code."); return; }
     setResending(true);
     try {
-      const result = await authRequest("resend-verification", { email: targetEmail });
+      const result = await authRequest<Challenge>("resend-verification", { email: targetEmail });
       rememberEmail(targetEmail);
+      rememberChallenge(result.data);
       setNotice(result.message || "A new verification code has been requested.");
       setResendIn(RESEND_SECONDS);
       setDigits(Array.from({ length: CODE_LENGTH }, () => ""));
@@ -206,10 +211,10 @@ export default function VerifyForm() {
           <span className="font-semibold text-[#0F172A] underline underline-offset-4">
             {email}
           </span>
-          . Use the complete verification link from your email to continue.
+          .
         </p>
 
-        {!tokenValid(token) && <p role="status" className="mt-4 rounded-lg bg-amber-50 p-3 text-sm text-amber-900">Open the complete verification link from your email. If you received only a code, <a href="mailto:support@registat.com" className="underline">contact support</a> to finish verification.</p>}
+        {!tokenValid(token) && <p role="status" className="mt-4 rounded-lg bg-amber-50 p-3 text-sm text-amber-900">Request a new code below to start verification in this browser.</p>}
         {error && <p role="alert" className="mt-4 text-sm text-red-600">{error}</p>}
         {notice && <p role="status" className="mt-4 text-sm text-green-700">{notice}</p>}
         <p className="mt-8 text-center text-sm font-semibold text-[#0F172A]">

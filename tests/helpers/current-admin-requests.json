@@ -1,0 +1,543 @@
+[
+  {
+    "method": "PATCH",
+    "path": "users/me",
+    "body": {
+      "name": "Example"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "users/admin"
+  },
+  {
+    "method": "GET",
+    "path": "users/admin/507f1f77bcf86cd799439012"
+  },
+  {
+    "method": "PATCH",
+    "path": "users/admin/507f1f77bcf86cd799439012",
+    "body": {
+      "name": "Example"
+    }
+  },
+  {
+    "method": "PATCH",
+    "path": "users/admin/507f1f77bcf86cd799439012/status",
+    "body": {
+      "status": "active"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "users/admin/customers"
+  },
+  {
+    "method": "POST",
+    "path": "users/admin/customers",
+    "body": {
+      "name": "Example",
+      "phone": "+2348000000001",
+      "email": "api-test@example.com"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "users/admin/customers/summary"
+  },
+  {
+    "method": "GET",
+    "path": "users/admin/customers/export"
+  },
+  {
+    "method": "GET",
+    "path": "users/admin/507f1f77bcf86cd799439012/overview"
+  },
+  {
+    "method": "GET",
+    "path": "users/admin/507f1f77bcf86cd799439012/status-history"
+  },
+  {
+    "method": "POST",
+    "path": "users/admin/507f1f77bcf86cd799439012/welcome-email",
+    "body": {}
+  },
+  {
+    "method": "POST",
+    "path": "users/admin/507f1f77bcf86cd799439012/notes",
+    "body": {
+      "message": "Example"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "users/admin/507f1f77bcf86cd799439012/notes"
+  },
+  {
+    "method": "GET",
+    "path": "users/admin/507f1f77bcf86cd799439012/profile-history"
+  },
+  {
+    "method": "PATCH",
+    "path": "users/admin/507f1f77bcf86cd799439012/role",
+    "body": {
+      "subAdminRole": "finance",
+      "reason": "Finance responsibilities assigned"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "users/admin/507f1f77bcf86cd799439012/role-history"
+  },
+  {
+    "method": "GET",
+    "path": "payments/admin"
+  },
+  {
+    "method": "GET",
+    "path": "payments/admin/REGPAY-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  {
+    "method": "POST",
+    "path": "payments/admin/REGPAY-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/verify"
+  },
+  {
+    "method": "POST",
+    "path": "payments/admin/REGPAY-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/recover",
+    "body": {
+      "checkoutId": "chk_SYNTHETIC_EXAMPLE"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "notifications/admin",
+    "body": {
+      "userId": "507f1f77bcf86cd799439011",
+      "title": "Additional details needed",
+      "message": "Please contact support with the requested information."
+    }
+  },
+  {
+    "method": "POST",
+    "path": "documents/admin/upload",
+    "body": {
+      "category": "certificate",
+      "userId": "507f1f77bcf86cd799439012"
+    },
+    "multipart": true
+  },
+  {
+    "method": "GET",
+    "path": "documents/admin"
+  },
+  {
+    "method": "GET",
+    "path": "documents/admin/507f1f77bcf86cd799439012/access-url"
+  },
+  {
+    "method": "PATCH",
+    "path": "documents/admin/507f1f77bcf86cd799439012/review",
+    "body": {
+      "status": "rejected",
+      "message": "Please upload a clear identity copy."
+    }
+  },
+  {
+    "method": "GET",
+    "path": "dashboard/admin"
+  },
+  {
+    "method": "GET",
+    "path": "dashboard/admin/activity"
+  },
+  {
+    "method": "GET",
+    "path": "compliance/admin/requirements"
+  },
+  {
+    "method": "POST",
+    "path": "compliance/admin/requirements",
+    "body": {
+      "code": "example-review",
+      "country": "NG",
+      "title": "Example company review",
+      "entityTypes": [
+        "private_limited"
+      ],
+      "cadence": "annual"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "compliance/admin/requirements/507f1f77bcf86cd799439012"
+  },
+  {
+    "method": "PATCH",
+    "path": "compliance/admin/requirements/507f1f77bcf86cd799439012",
+    "body": {
+      "isActive": false
+    }
+  },
+  {
+    "method": "POST",
+    "path": "compliance/admin",
+    "body": {
+      "companyId": "507f1f77bcf86cd799439013",
+      "requirementId": "507f1f77bcf86cd799439014",
+      "periodLabel": "2027",
+      "dueAt": "2027-01-31T12:00:00.000Z",
+      "assignedTo": "507f1f77bcf86cd799439012"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "compliance/admin"
+  },
+  {
+    "method": "GET",
+    "path": "compliance/admin/507f1f77bcf86cd799439012"
+  },
+  {
+    "method": "PATCH",
+    "path": "compliance/admin/507f1f77bcf86cd799439012",
+    "body": {
+      "status": "completed",
+      "completionNote": "Manually confirmed by the admin."
+    }
+  },
+  {
+    "method": "POST",
+    "path": "compliance/admin/507f1f77bcf86cd799439012/reopen",
+    "body": {
+      "reason": "A correction is needed.",
+      "dueAt": "2027-02-15T12:00:00.000Z"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "compliance/admin/507f1f77bcf86cd799439012/history"
+  },
+  {
+    "method": "GET",
+    "path": "compliance/admin/summary"
+  },
+  {
+    "method": "GET",
+    "path": "compliance/admin/export"
+  },
+  {
+    "method": "GET",
+    "path": "compliance/admin/507f1f77bcf86cd799439012/notes"
+  },
+  {
+    "method": "POST",
+    "path": "compliance/admin/507f1f77bcf86cd799439012/notes",
+    "body": {
+      "message": "Internal staff note."
+    }
+  },
+  {
+    "method": "GET",
+    "path": "companies/admin"
+  },
+  {
+    "method": "POST",
+    "path": "companies/admin",
+    "body": {
+      "ownerUserId": "507f1f77bcf86cd799439011",
+      "name": "Example Limited",
+      "country": "NG",
+      "jurisdiction": "Lagos",
+      "entityType": "private-limited",
+      "email": "business@example.com",
+      "phone": "+2348000000001"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "companies/admin/507f1f77bcf86cd799439012"
+  },
+  {
+    "method": "PATCH",
+    "path": "companies/admin/507f1f77bcf86cd799439012",
+    "body": {
+      "totalShares": 1
+    }
+  },
+  {
+    "method": "POST",
+    "path": "companies/admin/from-application/507f1f77bcf86cd799439012",
+    "body": {
+      "officialName": "Example Limited",
+      "registrationNumber": "RC-EXAMPLE-001",
+      "status": "active"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "catalog/admin"
+  },
+  {
+    "method": "GET",
+    "path": "catalog/admin/countries"
+  },
+  {
+    "method": "POST",
+    "path": "catalog/admin/countries",
+    "body": {
+      "code": "NG",
+      "name": "Ada",
+      "currency": "USD"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "catalog/admin/countries/507f1f77bcf86cd799439012"
+  },
+  {
+    "method": "PATCH",
+    "path": "catalog/admin/countries/507f1f77bcf86cd799439012",
+    "body": {
+      "name": "Ada"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "catalog/admin/services"
+  },
+  {
+    "method": "POST",
+    "path": "catalog/admin/services",
+    "body": {
+      "workflowType": "trademark_registration",
+      "slug": "example",
+      "name": "Ada",
+      "referencePrefix": "REG",
+      "totalSteps": 1,
+      "supportedCountries": [
+        "NG"
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "catalog/admin/services/507f1f77bcf86cd799439012"
+  },
+  {
+    "method": "PATCH",
+    "path": "catalog/admin/services/507f1f77bcf86cd799439012",
+    "body": {
+      "name": "Ada"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "catalog/admin/forms"
+  },
+  {
+    "method": "POST",
+    "path": "catalog/admin/forms",
+    "body": {
+      "serviceId": "507f1f77bcf86cd799439012",
+      "country": "NG",
+      "version": 1,
+      "steps": [
+        {
+          "key": "company-details",
+          "title": "Company information",
+          "fields": [
+            {
+              "key": "proposedName",
+              "label": "Company name",
+              "type": "text"
+            }
+          ]
+        }
+      ],
+      "documentRequirements": [
+        {
+          "key": "other",
+          "label": "Other",
+          "category": "other",
+          "ownerScope": "application"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "path": "catalog/admin/forms/507f1f77bcf86cd799439012"
+  },
+  {
+    "method": "PATCH",
+    "path": "catalog/admin/forms/507f1f77bcf86cd799439012",
+    "body": {
+      "steps": [
+        {
+          "key": "example",
+          "title": "Example",
+          "fields": [
+            {
+              "key": "example",
+              "label": "Example",
+              "type": "text"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "method": "PATCH",
+    "path": "catalog/admin/currency-settings",
+    "body": {
+      "usd_to_ngn": "1500",
+      "ngn_to_usd": "1600"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "catalog/admin/nice-classes",
+    "body": {
+      "number": 1,
+      "name": "Ada"
+    }
+  },
+  {
+    "method": "PATCH",
+    "path": "catalog/admin/nice-classes/507f1f77bcf86cd799439012",
+    "body": {
+      "name": "Ada"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "catalog/admin/add-ons",
+    "body": {
+      "slug": "example",
+      "name": "Ada",
+      "category": "Example",
+      "amountMinor": 1,
+      "billingPeriod": "Example",
+      "applicableServiceIds": []
+    }
+  },
+  {
+    "method": "PATCH",
+    "path": "catalog/admin/add-ons/507f1f77bcf86cd799439012",
+    "body": {
+      "name": "Ada"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "catalog/admin/fees",
+    "body": {
+      "serviceId": "507f1f77bcf86cd799439011",
+      "country": "NG",
+      "code": "example",
+      "label": "Example",
+      "amountMinor": 1,
+      "dueStage": "Example"
+    }
+  },
+  {
+    "method": "PATCH",
+    "path": "catalog/admin/fees/507f1f77bcf86cd799439012",
+    "body": {
+      "label": "Example"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "auth/create-sub-admin",
+    "body": {
+      "name": "Support Agent",
+      "email": "support@example.com",
+      "phone": "+999700009991",
+      "password": "SyntheticExample123!",
+      "subAdminRole": "support"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "applications/admin"
+  },
+  {
+    "method": "POST",
+    "path": "applications/admin",
+    "body": {
+      "userId": "507f1f77bcf86cd799439011",
+      "serviceId": "507f1f77bcf86cd799439018",
+      "country": "NG"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "applications/admin/507f1f77bcf86cd799439012"
+  },
+  {
+    "method": "PATCH",
+    "path": "applications/admin/507f1f77bcf86cd799439012/status",
+    "body": {
+      "status": "action_required",
+      "statusLabel": "More information needed",
+      "message": "Please review the company address.",
+      "notifyUser": true
+    }
+  },
+  {
+    "method": "PATCH",
+    "path": "applications/admin/507f1f77bcf86cd799439012/case",
+    "body": {
+      "assignedTo": "507f1f77bcf86cd799439012",
+      "priority": "high",
+      "dueAt": "2026-11-15T12:00:00.000Z"
+    }
+  },
+  {
+    "method": "POST",
+    "path": "applications/admin/507f1f77bcf86cd799439012/notes",
+    "body": {
+      "message": "Registry submission is being prepared."
+    }
+  },
+  {
+    "method": "GET",
+    "path": "applications/admin/507f1f77bcf86cd799439012/notes"
+  },
+  {
+    "method": "POST",
+    "path": "applications/admin/507f1f77bcf86cd799439012/requests",
+    "body": {
+      "kind": "document",
+      "title": "Identity replacement required",
+      "message": "Please upload a clear identity document.",
+      "category": "identification",
+      "documentId": "507f1f77bcf86cd799439014"
+    }
+  },
+  {
+    "method": "GET",
+    "path": "applications/admin/507f1f77bcf86cd799439012/requests"
+  },
+  {
+    "method": "PATCH",
+    "path": "applications/admin/507f1f77bcf86cd799439012/requests/507f1f77bcf86cd799439012",
+    "body": {
+      "status": "resolved",
+      "message": "Accepted, thank you."
+    }
+  },
+  {
+    "method": "POST",
+    "path": "applications/admin/507f1f77bcf86cd799439012/trademark-search-report",
+    "body": {
+      "summary": "The manual search is complete. Registration may proceed.",
+      "documentIds": [
+        "507f1f77bcf86cd799439014"
+      ],
+      "canProceed": true
+    }
+  }
+]
