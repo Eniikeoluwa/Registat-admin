@@ -190,3 +190,61 @@
 @media (max-width: 1300px) { .services-workspace.has-drawer { grid-template-columns: minmax(0,1fr); } .services-workspace .service-drawer { position: fixed; top: 64px; right: 0; bottom: 0; width: min(400px,calc(100vw - 24px)); z-index: 30; box-shadow: -10px 0 40px #03211815; } .service-wizard-body { grid-template-columns: 200px minmax(0,1fr) 235px; } .service-wizard-review .service-wizard-body { grid-template-columns: 200px minmax(0,1fr); } }
 @media (max-width: 950px) { .service-wizard-preview { display: none; } .service-wizard-body { grid-template-columns: 180px minmax(0,1fr); } .service-wizard-review .service-wizard-body { grid-template-columns: 180px minmax(0,1fr); } .services-summary-grid { gap: 8px; } .services-summary-grid .company-summary-card { padding: 13px; } }
 @media (max-width: 767px) { .services-workspace .service-drawer { top: 0; width: 100%; z-index: 40; } .services-summary-grid { grid-template-columns: repeat(2,1fr); margin: 14px 0; } .services-filters { align-items: stretch; } .services-filters .application-search-input { width: 100%; flex: none; } .services-filters > div:last-child { flex-wrap: nowrap; overflow-x: auto; width: 100%; padding-bottom: 4px; } .services-filters select { flex-shrink: 0; } .service-wizard { width: calc(100vw - 20px); height: calc(100dvh - 24px); } .service-wizard-body, .service-wizard-review .service-wizard-body { display: flex; flex-direction: column; } .service-wizard-steps { display: flex; overflow-x: auto; padding: 8px; border-right: 0; border-bottom: 1px solid #e2e8f0; flex-shrink: 0; } .service-wizard-steps button { min-width: 90px; padding: 6px; } .service-wizard-steps strong { font-size: 10px; } .service-wizard-steps small { display: none; } .service-wizard-content { flex: 1; } .service-content-scroll { padding: 20px 16px; } .service-two-fields { grid-template-columns: 1fr; } .service-inline-controls { flex-wrap: wrap; } .service-field-head, .service-field-row { grid-template-columns: minmax(80px,1fr) 55px 55px; gap: 6px; padding: 10px; } .service-fee-head, .service-fee-row { grid-template-columns: minmax(70px,1fr) minmax(80px,1fr) 70px 14px; gap: 5px; padding: 9px; } .service-overlay-filters { flex-wrap: wrap; } .service-overlay-filters input { flex-basis: 100%; } .service-review-cards dl > div { grid-template-columns: 90px 1fr; } }
+/* Live catalogue presentation */
+.live-service-wizard .service-config-help { color: #64748b; font-size: 13px; line-height: 1.7; margin-bottom: 20px; }
+.live-service-record { display: flex; align-items: center; gap: 12px; padding: 18px; }
+.live-service-record > div { flex: 1; }
+.live-service-record strong { font-size: 14px; }
+.live-service-record small { font-size: 12px; }
+.service-addon-select { margin-top: 20px; }
+.service-addon-select summary { cursor: pointer; color: #047857; margin-bottom: 12px; }
+.service-addon-select > button { display: block; width: 100%; text-align: left; }
+.services-workspace .services-table td:nth-child(2) { min-width: 240px; max-width: 350px; }
+.services-workspace .services-table td:nth-child(5) { max-width: 180px; font-size: 12px; }
+.live-service-wizard .service-config-card { padding: 20px; }
+.live-service-wizard .service-config-card h3 { font-weight: 600; margin: 12px 0; }
+@media (min-width: 1500px) { .services-workspace.has-drawer { grid-template-columns: minmax(0,1fr) 420px; } }
+.services-workspace .service-drawer-header > div > .design-badge { margin-left: auto; }
+.services-workspace .service-drawer-header > div > button { font-size: 20px; line-height: 24px; }
+.services-workspace .service-drawer-detail { font-size: 13px; line-height: 21px; }
+.services-workspace .service-drawer-body h3 { font-size: 14px; }
+.services-workspace .service-related-row strong { font-size: 13px; }
+.services-workspace .service-related-row small { font-size: 11px; }
+.live-service-wizard .service-wizard-steps strong { font-size: 13px; }
+.live-service-wizard .service-wizard-steps small { font-size: 12px; }
+.live-service-wizard .service-wizard-preview article > strong { font-size: 14px; }
+.live-service-wizard .service-wizard-preview article p { font-size: 12px; line-height: 20px; }
+/* Add-on selector, matching the service setup design. */
+.service-overlay-addons { width: min(1140px, calc(100vw - 48px)); max-height: calc(100dvh - 48px); }
+.service-overlay-addons > header { padding: 22px 28px 18px; align-items: flex-start; }
+.service-overlay-addons > header h2 { font-size: 24px; letter-spacing: -.6px; }
+.service-overlay-addons > header p { color: #718096; font-size: 13px; margin-top: 5px; line-height: 20px; }
+.service-overlay-addons .service-overlay-body { padding: 0; overflow: auto; }
+.service-overlay-addons .service-overlay-filters { padding: 18px; gap: 14px; background: white; }
+.service-addon-search { display: flex; align-items: center; flex: 1; gap: 10px; border: 1px solid #dce4ef; border-radius: 10px; padding: 0 15px; min-width: 180px; }
+.service-addon-search svg { width: 18px; height: 18px; flex-shrink: 0; color: #718096; }
+.service-overlay-addons .service-addon-search input { border: 0; padding: 12px 0; width: 100%; background: transparent; font-size: 15px; }
+.service-overlay-addons .service-overlay-filters select { padding: 10px 14px; border-radius: 10px; min-width: 170px; color: #64748b; font-size: 14px; background: white; }
+.service-addon-table-scroll { overflow: auto; }
+.service-addon-table { width: 100%; min-width: 820px; border-collapse: collapse; text-align: left; }
+.service-addon-table th { color: #8b9db6; background: #f7f9fb; font-weight: 500; text-transform: uppercase; font-size: 14px; padding: 17px 14px; border-block: 1px solid #edf2f6; }
+.service-addon-table td { padding: 16px 14px; border-bottom: 1px solid #edf2f6; height: 75px; font-size: 15px; color: #475569; }
+.service-addon-table th:first-child, .service-addon-table td:first-child { width: 52px; padding-left: 18px; }
+.service-addon-table th:nth-child(2) { width: 46%; }
+.service-addon-table th:nth-child(3) { width: 23%; }
+.service-addon-table th:nth-child(4) { width: 13%; }
+.service-addon-table input { width: 20px; height: 20px; accent-color: #087e42; cursor: pointer; }
+.service-addon-table strong { display: block; color: #101b30; font-size: 15px; font-weight: 600; line-height: 21px; }
+.service-addon-table small { display: block; color: #64748b; font-size: 13px; line-height: 19px; }
+.service-addon-table .service-category-chip { font-size: 12px; }
+.service-addon-table tr.selected { background: #f7fdfb; }
+.service-addon-status.active { color: #009879; }
+.service-addon-status.inactive { color: #64748b; }
+.service-addon-row-menu { position: relative; }
+.service-addon-row-menu summary { list-style: none; color: #8b9db6; cursor: pointer; padding: 5px; }
+.service-addon-row-menu summary::-webkit-details-marker { display: none; }
+.service-addon-row-menu button { position: absolute; right: 0; bottom: 30px; width: 140px; padding: 10px; border: 1px solid #dce4ef; border-radius: 8px; background: white; box-shadow: 0 4px 16px #0001; z-index: 1; }
+.service-overlay-addons > footer { background: #f7f9fb; padding: 18px; border-top: 1px solid #dce4ef; }
+.service-overlay-addons > footer .application-button { font-size: 15px; min-height: 36px; }
+.service-overlay-addons > footer .primary { background: #008367; padding-inline: 22px; }
+@media (max-width: 767px) { .service-overlay-addons { width: calc(100vw - 20px); } .service-overlay-addons .service-overlay-filters { flex-wrap: wrap; } .service-addon-search { flex-basis: 100%; } .service-overlay-addons .service-overlay-filters select { min-width: 0; flex: 1; } }
