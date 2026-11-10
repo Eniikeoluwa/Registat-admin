@@ -158,3 +158,49 @@
 .compliance-result dt { color: #94a3b8; }
 @media(max-width:1050px) { .compliance-filters { flex-wrap: wrap; } .compliance-filters > div { flex-wrap: wrap; } .attention-row { grid-template-columns: 22px minmax(130px,1.5fr) minmax(110px,1fr) minmax(100px,1fr); } .attention-row > :nth-child(5), .attention-row > :nth-child(6) { grid-column: span 2; } }
 @media(max-width:700px) { .compliance-workspace { padding: 20px 13px; } .compliance-summary { grid-template-columns: repeat(2,minmax(0,1fr)); } .compliance-summary section { padding: 15px; min-height: 110px; } .compliance-attention p { display: none; } .attention-row { grid-template-columns: 22px minmax(0,1fr) auto; } .attention-row > :nth-child(3), .attention-row > :nth-child(4) { display: none; } .attention-row > :nth-child(5) { grid-column: 2; } .attention-row > :nth-child(6) { grid-column: 3; grid-row: 1 / 3; } .compliance-detail-grid { grid-template-columns: 1fr; } .compliance-info-grid { gap: 13px; } .compliance-detail-title h1 { font-size: 21px; } .compliance-dialog > header, .compliance-dialog-body { padding-left: 20px; padding-right: 20px; } }
+/* Compliance design and preparation flow */
+.compliance-design-layout { display: grid; grid-template-columns: minmax(0,1fr); }
+.compliance-design-layout.has-drawer { grid-template-columns: minmax(0,1fr) 370px; }
+.compliance-design-layout .jurisdiction-drawer { margin: 0; }
+.compliance-secondary-links { display: flex; flex-wrap: wrap; gap: 18px; padding: 16px 32px; color: #047857; font-size: 13px; }
+.compliance-country-link { text-align: left; white-space: nowrap; }
+.compliance-preparation-dialog { width: min(1000px,calc(100vw - 48px)); margin: auto; padding: 0; max-height: calc(100dvh - 48px); display: flex; flex-direction: column; }
+.compliance-preparation-dialog::backdrop, dialog.compliance-dialog::backdrop { background: #0f172a66; backdrop-filter: blur(3px); }
+.compliance-preparation-dialog > header { padding: 30px 48px 26px; flex-shrink: 0; }
+.compliance-preparation-dialog > header small { font-size: 14px; }
+.compliance-preparation-dialog > header h2 { font-size: 30px; letter-spacing: -.8px; margin-top: 10px; }
+.compliance-preparation-dialog > header p { font-size: 18px; line-height: 28px; }
+.compliance-preparation-dialog .compliance-dialog-body { overflow: auto; padding: 34px 48px; }
+.compliance-preparation-dialog .compliance-modal-box { padding: 24px; border-radius: 13px; margin-bottom: 28px; }
+.compliance-preparation-dialog .compliance-modal-box h3 { font-size: 16px; margin-bottom: 22px; }
+.compliance-preparation-dialog .compliance-modal-box dl { font-size: 16px; gap: 18px; }
+.compliance-prepare-company { display: flex; align-items: center; gap: 16px; }
+.compliance-prepare-company > div:last-child { margin-left: auto; }
+.compliance-prepare-company strong { font-size: 20px; }
+.compliance-prepare-company small { display: block; color: #94a3b8; margin-top: 4px; }
+.compliance-prepare-fields { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 24px; margin-bottom: 18px; }
+.compliance-prepare-fields span, .compliance-prepare-fields strong { display: block; font-size: 16px; }
+.compliance-prepare-fields span { color: #94a3b8; margin-bottom: 8px; }
+.compliance-preparation-dialog > footer { padding: 22px 38px; flex-shrink: 0; }
+.compliance-preparation-dialog > footer button { font-size: 18px; min-height: 48px; padding-inline: 28px; }
+.compliance-preparation-dialog .compliance-upload-zone { min-height: 210px; justify-content: center; font-size: 18px; border-radius: 12px; }
+.compliance-preparation-dialog .compliance-upload-zone em { color: #00634c; font-style: normal; }
+.compliance-preparation-dialog .compliance-uploaded-file { border-radius: 12px; padding: 20px; font-size: 17px; margin-top: 28px; gap: 16px; }
+.compliance-file-icon { color: #ef4444; border: 1px solid #fecaca; border-radius: 6px; padding: 12px 8px; background: #fee2e2; }
+.compliance-uploaded-file small { display: block; color: #94a3b8; font-size: 13px; }
+.compliance-completed-banner { display: inline-block; color: #00634c; background: #d1fae5; border: 1px solid #34d399; border-radius: 8px; padding: 9px 16px; margin-top: 12px; }
+.compliance-preparation-dialog .compliance-next-steps { font-size: 16px; line-height: 25px; }
+@media(max-width:1050px) { .compliance-design-layout.has-drawer { grid-template-columns: minmax(0,1fr); } }
+@media(max-width:700px) { .compliance-preparation-dialog { width: calc(100vw - 20px); max-height: calc(100dvh - 24px); } .compliance-preparation-dialog > header, .compliance-preparation-dialog .compliance-dialog-body { padding: 22px; } .compliance-preparation-dialog > header h2 { font-size: 23px; } .compliance-preparation-dialog > header p { font-size: 14px; } .compliance-prepare-fields { grid-template-columns: 1fr; } .compliance-prepare-company { flex-wrap: wrap; } .compliance-preparation-dialog .compliance-modal-box dl { grid-template-columns: 1fr; } }
+.compliance-entity-picker .compliance-dialog-body > input { width: 100%; padding: 14px; border: 1px solid #dce4ed; border-radius: 10px; margin-bottom: 16px; }
+.compliance-entity-picker label { display: flex; align-items: center; justify-content: space-between; gap: 16px; border: 1px solid #dce4ed; border-radius: 7px; padding: 14px; margin-block: 10px; font-size: 15px; }
+.compliance-entity-picker label.selected { border-color: #6ee7b7; background: #f5fdfa; }
+.compliance-entity-picker input[type=checkbox] { accent-color: #087e42; width: 20px; height: 20px; }
+.compliance-preparation-dialog.is-completed .compliance-completed-banner { position: absolute; right: 76px; top: 28px; font-size: 17px; }
+.compliance-preparation-dialog.is-completed > footer { display: none; }
+.compliance-completion-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; padding-block: 10px 24px; margin-bottom: 30px; border-block: 1px solid #edf1f5; font-size: 17px; }
+.compliance-completion-grid dt { color: #94a3b8; margin-bottom: 5px; }
+@media(max-width:700px) { .compliance-completion-grid { grid-template-columns: 1fr; } .compliance-preparation-dialog.is-completed .compliance-completed-banner { position: static; } }
+.compliance-document-download { color: #94a3b8; font-size: 26px; padding: 8px; }
+.compliance-uploaded-file > div:last-child { margin-left: auto; }
+.compliance-common-requirements { display: grid; gap: 12px; color: #64748b; font-size: 12px; line-height: 18px; margin-top: 18px; }

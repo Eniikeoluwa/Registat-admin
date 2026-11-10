@@ -10,7 +10,7 @@ import { DataView, Pagination, Search, useFilters } from "./ModuleUI";
 import { ActionButton, ActionForm, Permit, RemoteRecords } from "./ApiControls";
 import { DocumentAccess, DocumentDelivery } from "./Documents";
 export default function Compliance({ requirements = false, selected }: { requirements?: boolean; selected?: string }) {
-  const account = useAccount(); const filters = useFilters(); const query = new URLSearchParams(filters.search.toString()); query.set("limit", "20");
+  const account = useAccount(); const filters = useFilters(); const query = new URLSearchParams(filters.search.toString()); query.delete("ui"); query.set("limit", "20");
   if (selected && !query.has("status")) query.set("status", selected);
   const base = `compliance/admin${requirements ? "/requirements" : ""}`;
   const resource = useApi<(AdminComplianceFilingResponse & AdminComplianceRequirementResponse)[]>(can(account, "compliance:read") ? `${base}?${query}` : null);
