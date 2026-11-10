@@ -1,10 +1,3 @@
 "use client";
-import { ActionForm, Permit } from "@/components/modules/ApiControls";
-import Link from "next/link";
-import ChangePasswordForm from "@/components/auth/ChangePasswordForm";
-import { LogoutButton, useAccount } from "@/components/auth/AccountIdentity";
-import { panelClass } from "@/components/applications/UI";
-export default function AdminSettingsPage() {
-  const account = useAccount();
-  return <main className="mx-auto max-w-4xl space-y-6 p-5 sm:p-8"><header><h1 className="text-3xl font-bold">Account settings</h1><p className="mt-2 text-slate-500">Your account and security.</p></header><section className={panelClass}><h2 className="text-xl font-semibold">Personal information</h2><dl className="mt-4 space-y-3"><div><dt>Name</dt><dd>{account?.name}</dd></div><div><dt>Email</dt><dd>{account?.email}</dd></div><div><dt>Phone</dt><dd>{account?.phone || "Not provided"}</dd></div><div><dt>Role</dt><dd>{account?.role}</dd></div></dl><div className="mt-5"><ActionForm title="Edit personal information" scope={{ userId: account?._id }} schema="UpdateProfileRequest" method="PATCH" endpoint="users/me" initial={account} onSaved={() => window.location.reload()} /></div></section><section className={panelClass}><h2 className="mb-4 text-xl font-semibold">Change password</h2><ChangePasswordForm /></section><section className={`${panelClass} space-y-4`}><h2 className="text-xl font-semibold">Account access</h2>{account?.role === "superAdmin" && <Link className="block text-[#067939] underline" href="/admin/staff">Manage staff accounts</Link>}<Permit permission="notifications:send"><ActionForm title="Send in-app notification" schema="AdminCreateNotification" endpoint="notifications/admin" /></Permit><Permit permission="currency-rates:write"><Link className="block text-[#067939] underline" href="/admin/catalog/currency">Manage exchange rates</Link></Permit><LogoutButton /><p className="text-sm text-slate-500">Notification preferences and a general account audit log are unavailable. Customer and staff changes have their own private histories.</p></section></main>;
-}
+import SettingsDesign from "./design/SettingsDesign";
+export default function AdminSettingsPage() { return <SettingsDesign/>; }

@@ -136,3 +136,46 @@
 .settings-extra dl { background: #f6f8fa; border: 1px solid #e8edf2; border-radius: 9px; padding: 9px 14px; }
 @media (max-width: 1000px) { .admin-settings { padding: 25px 24px 65px; } .settings-personal-grid,.settings-security-grid { gap: 15px; } .settings-personal-grid .settings-security-summary { max-width: none; } }
 @media (max-width: 700px) { .admin-settings { padding: 20px 15px 50px; } .settings-heading h1 { font-size: 24px; } .settings-heading p { font-size: 14px; } .settings-tabs { gap: 22px; } .settings-personal-grid,.settings-security-grid { grid-template-columns: 1fr; } .settings-personal-grid .settings-security-summary { grid-column: auto; } .settings-audit-filters { flex-wrap: wrap; } .settings-audit-filters input { flex-basis: 100%; } .settings-audit-filters select { flex: 1; min-width: 110px; } .settings-table-scroll table { min-width: 780px; } .settings-audit > footer { flex-wrap: wrap; gap: 10px; } }
+/* Account settings reference design */
+.settings-icon svg { width: 19px; height: 19px; }
+.settings-preview-note { padding: 10px 14px; border: 1px solid #e2e8ee; border-radius: 8px; background: #f8fafc; color: #718096; font-size: 12px; margin-bottom: 18px; }
+.settings-preview-label { color: #8794a7; border: 1px solid #e2e8ee; border-radius: 5px; padding: 2px 6px; font-size: 11px; margin-left: 8px; }
+.settings-session.current { background: #f7faf9; padding: 18px; border-radius: 13px; margin-top: 18px; }
+.settings-session-menu { position: relative; }
+.settings-session-menu summary, .settings-row-actions summary { list-style: none; color: #94a3b8; cursor: pointer; }
+.settings-session-menu summary::-webkit-details-marker, .settings-row-actions summary::-webkit-details-marker { display: none; }
+.settings-session-menu button { position: absolute; right: 0; bottom: 24px; background: white; border: 1px solid #e2e8ee; width: 160px; padding: 10px; border-radius: 8px; z-index: 2; }
+.settings-drawer-dialog { position: fixed; inset: 0 0 0 auto; margin: 0; padding: 0; max-width: 100vw; max-height: none; width: min(480px,100vw); height: 100dvh; border: 0; border-left: 1px solid #e2e8ee; border-radius: 0; }
+.settings-drawer-dialog::backdrop { background: transparent; }
+.settings-drawer-dialog > header { border-bottom: 0; }
+.settings-drawer-dialog .settings-drawer-body { font-size: 14px; }
+.settings-drawer-dialog .settings-admin-form input, .settings-drawer-dialog .settings-admin-form select { min-height: 46px; }
+.settings-drawer-dialog > footer .settings-primary { background: #037b3e; }
+.settings-row-actions .settings-menu a { display: block; padding: 8px 10px; color: #26364d; }
+.settings-audit .settings-table-scroll { margin: 0 25px; width: calc(100% - 50px); border: 1px solid #edf1f4; border-radius: 14px; }
+.settings-audit .settings-table-scroll th { background: white; }
+.settings-edit-dialog { border-radius: 15px; padding: 25px; width: min(560px,calc(100vw - 30px)); }
+.settings-edit-dialog header { display: flex; justify-content: space-between; margin-bottom: 24px; }
+.settings-edit-dialog .settings-profile-form input { height: 45px; }
+.settings-additional { margin-top: 28px; color: #718096; font-size: 12px; }
+.settings-additional summary { cursor: pointer; }
+.settings-additional > div { display: grid; gap: 16px; padding: 18px 0; }
+.settings-personal-grid .settings-identity .application-initials { width: 64px; height: 64px; font-size: 22px; }
+.settings-drawer-body .application-initials { width: 28px; height: 28px; font-size: 10px; margin-right: 10px; display: inline-flex; }
+@media(min-width:1450px) { .admin-settings { padding: 34px 56px 80px; } .settings-card { padding: 30px; } .settings-admin-list,.settings-audit { padding: 0; } .settings-card h2 { font-size: 21px; } .settings-card > p,.settings-card > header p { font-size: 14px; } .settings-table-scroll th,.settings-table-scroll td { height: 69px; font-size: 13px; } .settings-security-grid > .settings-card { min-height: 370px; } }
+.settings-pill.finance-admin { color: #a16207; background: #fefce8; }
+.settings-pill.compliance-admin { color: #0f766e; background: #f0fdfa; }
+.settings-link { display: inline-flex; align-items: center; gap: 7px; }
+.settings-link svg { width: 17px; height: 17px; }
+.settings-profile-list dt { display: flex; align-items: center; gap: 10px; }
+.settings-profile-list dt svg { width: 18px; height: 18px; }
+.settings-profile-list dd { font-weight: 500; }
+.settings-select-control,.settings-input-icon { display: block; position: relative; }
+.settings-select-control > svg,.settings-input-icon > svg { position: absolute; left: 14px; top: 12px; width: 17px; height: 17px; color: #94a3b8; pointer-events: none; }
+.settings-select-control select,.settings-input-icon input { padding-left: 42px; }
+.settings-password-form label > span > svg { position: absolute; top: 12px; left: 14px; width: 17px; height: 17px; color: #94a3b8; }
+.settings-password-form input { padding-left: 42px; }
+.settings-password-form label > span button svg { width: 19px; height: 19px; }
+.settings-drawer-dialog > header h2 { font-size: 23px; font-weight: 600; }
+.settings-admin-form input,.settings-admin-form select { font-weight: 400; }
+.settings-detail-list dd,.settings-extra dd { font-weight: 500; }
