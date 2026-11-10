@@ -21,7 +21,7 @@ export const countryOptions = [
   { name: 'Canada', code: 'CA', flag: '🇨🇦', currency: 'CAD', region: 'North America' },
 ];
 export const jurisdictionEntityOptions = [
-  ...baseEntities.map(entity => ({ id: entity.id, name: entity.name, description: entity.description })),
+  ...baseEntities.map(entity => ({ id: entity.id, name: entity.id === 'nonprofit' ? 'Non-Profit Organisation' : entity.name, description: ({ 'private-limited': 'Most common structure for small and medium businesses.', 'public-limited': 'For larger businesses that intend to list on a stock exchange.', partnership: 'General and limited partnerships.', sole: 'Single individual ownership.', nonprofit: 'For charitable and non-governmental organisations.' } as Record<string,string>)[entity.id] || entity.description })),
   { id: 'other', name: 'Other (Custom)', description: 'Entity types specific to this jurisdiction' },
 ];
 export const newJurisdiction = (): Jurisdiction => ({
