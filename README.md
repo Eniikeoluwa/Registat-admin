@@ -40,13 +40,33 @@ provider's environment settings and redeploy for production. It stays on the
 server; browsers use the same-origin `/api/auth/*` and `/api/registat/*` proxies,
 so no public environment variable or browser CORS configuration is needed.
 
-Users, companies, applications, catalogue/pricing, payments, and notifications use
-live APIs. Dashboard totals come from paginated admin application metadata, and
-notifications are scoped to the signed-in account. No demo fallback is used on
-these screens. Compliance, invoices/refunds/manual payments, profile editing,
-admin invitations and audit logs have no documented backend implementation and
-show availability notices. Admin document downloads remain owner-restricted;
-verification/password-reset token delivery also requires backend work.
+The portal uses the current staff API, including dedicated staff login, effective
+permissions, customer creation/editing/history/exports, application drafts and case
+management, document delivery/review/downloads, staff analytics/activity, compliance
+requirements and filings, and Bachs payment reconciliation/recovery. Existing page
+shells, CSS, cards and form controls are retained. See [admin API coverage](docs/admin-api-coverage.md).
+
+Staff log in through `/v1/auth/admin-login`. Roles are `superAdmin` and `subAdmin`;
+sub-admin assignments are `admin`, `finance`, `support`, and `compliance`. The effective
+permission list returned by login controls navigation and actions. Access and refresh
+tokens stay in HttpOnly cookies; a signed, identity-bound permission snapshot is rotated
+with the refresh token. The backend rechecks the current identity/assignment and enforces
+permissions on every protected call. Existing sessions must sign in again after this update.
+
+Email verification uses `{email, token, code}` and reset uses
+`{email, token, code, password}`. UUID challenges are kept in session storage (with an
+in-memory fallback), never added to URLs. Codes are delivered by email. New staff
+creation and sensitive mutations require a recent login. A customer created by staff
+sets their own password through Forgot password; if welcome email enqueue fails, resend
+it from their account instead of creating the account again.
+
+Exports return HTTP 202 acknowledgements: the backend generates and emails the CSV.
+Dashboard amounts are exact minor-unit strings, formatted without Number rounding.
+USD/NGN revenue stays separate. Bachs collected amounts are decimal strings and are
+shown separately from the frozen charge. Historical Paystack records remain readable;
+the current backend cannot reconcile them through Bachs. Invoices, refunds, stored
+cards, recurring payments, general audit logs and notification preference APIs remain
+unavailable.
 
 To refresh the proxy allowlist and validation schemas from the live OpenAPI docs:
 
