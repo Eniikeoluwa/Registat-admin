@@ -1,0 +1,64 @@
+.live-companies-workspace { padding:30px 36px; }
+.live-companies-workspace .company-summary-grid { margin:30px 0; }
+.live-companies-workspace .company-summary-card { min-height:140px; padding:24px; }
+.live-companies-workspace .company-summary-card strong { margin:12px 0 6px; }
+.live-companies-workspace .company-summary-card span { font-size:13px; }
+.live-companies-workspace .company-list-table { min-width:1050px; }
+.live-companies-workspace .company-list-table td { height:66px; padding:14px 16px; }
+.live-companies-workspace .company-list-table th { padding:18px 16px; }
+.live-companies-workspace .company-list-table td:first-child { width:44px; }
+.live-companies-workspace .company-list-table td:nth-child(2) { min-width:260px; }
+.company-entity-filter,.company-category-filter { border:1px solid #dce3eb; border-radius:10px; padding:8px 12px; background:white; color:#536174; font-size:12px; width:150px; }
+.company-list-filters > .application-search-input { width:min(350px,100%); }
+.live-company-detail .company-detail-header { padding:22px 36px 0; }
+.live-company-detail .company-detail-body { padding:32px 36px; }
+.live-company-detail .company-title-row { margin-top:4px; }
+.live-company-detail .company-title-actions .applications-more summary { display:flex; gap:8px; align-items:center; }
+.live-company-detail .company-title-actions summary svg { width:16px; height:16px; }
+.live-company-detail .company-tabs { margin-top:24px; }
+.live-company-detail .company-title p .design-country { color:#617083; }
+.live-company-detail .company-data-table th:first-child { width:auto; }
+.live-company-detail .company-data-table :is(td,th):first-child { text-align:left; padding-left:24px; padding-right:16px; }
+.live-company-detail .company-documents-table { min-width:900px; }
+.live-company-detail .company-document-name { text-align:left; }
+.live-company-detail .company-document-filters { gap:16px; flex-wrap:wrap; }
+.live-company-detail .company-document-filters > div:last-child { flex-wrap:wrap; }
+.live-company-detail .company-uploader .application-initials { width:28px; height:28px; font-size:10px; }
+.live-company-detail .company-overview-stat strong { font-size:21px; }
+.live-company-detail .company-overview-stat:last-child strong { font-size:18px; }
+.company-live-dialog { width:min(1320px,calc(100vw - 64px)); height:min(900px,calc(100dvh - 48px)); }
+.company-live-dialog .new-application-body { grid-template-columns:244px minmax(0,1fr) 310px; }
+.company-live-dialog .company-owner-select > .application-button:first-child { flex:1; justify-content:flex-start; }
+.company-live-dialog .company-owner-select > .application-button:first-child svg:last-child { margin-left:auto; }
+.company-live-dialog .company-capital-fields .application-field { margin-bottom:0; }
+.company-live-dialog .company-capital-fields { margin:18px 0; }
+.company-live-dialog .company-switch-row { margin-top:28px; }
+.company-live-dialog .company-switch-row input { accent-color:#047857; }
+.company-live-dialog .company-role-options { display:flex; flex-wrap:wrap; gap:10px; margin:16px 0; }
+.company-role-options label { display:flex; align-items:center; gap:5px; font-size:11px; color:#536174; }
+.company-role-options input { accent-color:#047857; }
+.company-live-person { padding:18px; border-top:1px solid #eef2f6; background:#fafbfc; }
+.company-person-heading { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; font-size:12px; font-weight:500; }
+.company-owner-picker { border:1px solid #dce3eb; border-radius:10px; padding:12px; margin-bottom:20px; max-height:320px; overflow:auto; }
+.company-owner-picker > input { width:100%; border:1px solid #dce3eb; padding:10px; border-radius:8px; margin-bottom:12px; font-size:12px; }
+.company-owner-picker > button { display:flex; width:100%; align-items:center; gap:10px; padding:10px; text-align:left; font-size:12px; border-radius:8px; }
+.company-owner-picker > button:hover { background:#f0fdf7; }
+.company-owner-picker small { display:block; font-size:10px; color:#94a3b8; margin-top:4px; }
+.company-schema-fields :is(input,select,textarea) { font-size:12px; }
+.company-schema-fields { margin-top:16px; }
+.company-api-tools { margin-top:22px; font-size:13px; }
+.company-api-tools > details { padding:16px; }
+.company-api-tools h2 { font-size:16px; }
+.company-api-tools form { border:0; box-shadow:none; padding:0; }
+.company-live-success { width:min(615px,calc(100vw - 40px)); }
+.company-live-success h2 { font-size:26px; }
+.company-live-success > p { font-size:16px; line-height:25px; max-width:450px; }
+.company-skip-dialog .design-modal-footer > button { flex:1; }
+.design-badge.registration_in_progress { background:#fff9e7; color:#d16b0a; }
+.design-badge.inactive,.design-badge.dissolved { background:#f1f5f9; color:#64748b; }
+.design-badge.success { background:#eaffdf; color:#067414; }
+.design-badge.failed,.design-badge.reversed { background:#fff1f1; color:#e23c3c; }
+@media(max-width:1250px) { .company-live-dialog .new-application-body { grid-template-columns:180px minmax(0,1fr) 240px; } .live-company-detail .company-title-row { flex-wrap:wrap; } .live-company-detail .company-title-actions { margin-left:82px; } }
+@media(max-width:1050px) { .company-live-dialog .new-application-body { grid-template-columns:160px minmax(0,1fr); } .live-company-detail .company-summary-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .live-companies-workspace .company-summary-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media(max-width:767px) { .live-companies-workspace { padding:22px 16px; } .live-companies-workspace .company-summary-card { padding:16px; min-height:110px; } .live-company-detail .company-detail-header { padding:20px 18px 0; } .live-company-detail .company-detail-body { padding:24px 18px; } .live-company-detail .company-title h1 { font-size:22px; } .live-company-detail .company-title-actions { margin-left:0; } .company-live-dialog { width:calc(100vw - 20px); height:calc(100dvh - 24px); } .company-live-dialog .new-application-body { display:flex; flex-direction:column; } .company-live-dialog .application-stepper li button > div { display:none; } }
+.live-companies-workspace .company-list-name > .application-initials { width:32px; height:32px; font-size:11px; flex:none; }
