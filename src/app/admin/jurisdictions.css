@@ -225,3 +225,26 @@
 @media (max-width: 1200px) { .jurisdiction-setup-grid { grid-template-columns: 165px minmax(0,1fr) 235px; gap: 14px; } .jurisdiction-setup { padding: 22px; } .jurisdiction-service-body { grid-template-columns: 180px minmax(0,1fr) 220px; } }
 @media (max-width: 1050px) { .jurisdictions-workspace.has-drawer { grid-template-columns: minmax(0,1fr); } .jurisdiction-drawer { position: fixed; top: 64px; right: 0; bottom: 0; width: min(430px,100vw); margin: 0; z-index: 30; box-shadow: -12px 0 30px #0002; } .jurisdiction-setup-grid { grid-template-columns: 155px minmax(0,1fr); } .jurisdiction-setup-aside { display: none; } .jurisdiction-service-preview { display: none; } .jurisdiction-service-body { grid-template-columns: 180px minmax(0,1fr); } }
 @media (max-width: 700px) { .jurisdiction-setup { padding: 16px; } .jurisdiction-setup-grid { display: block; } .jurisdiction-stepper { display: flex; overflow-x: auto; margin-bottom: 14px; } .jurisdiction-stepper button { min-width: 105px; align-items: center; } .jurisdiction-stepper small { display: none; } .jurisdiction-setup-card { padding: 18px; } .jurisdiction-two-columns { grid-template-columns: 1fr; gap: 15px; } .jurisdiction-service-card-main { flex-wrap: wrap; } .jurisdiction-service-card-main > div { min-width: 70%; } .jurisdiction-card-toggle { margin-left: auto; } .jurisdiction-service-dialog { width: calc(100vw - 20px); height: calc(100dvh - 24px); } .jurisdiction-service-body { display: flex; flex-direction: column; } .jurisdiction-service-steps { display: flex; overflow-x: auto; border-right: 0; border-bottom: 1px solid #edf2f7; padding: 7px; } .jurisdiction-service-steps button { min-width: 120px; } .jurisdiction-service-steps small { display: none; } .jurisdiction-service-content { flex: 1; padding: 17px; } .jurisdiction-dialog-body { padding: 16px; } .jurisdiction-review-grid { grid-template-columns: 1fr; } }
+/* Jurisdiction reference layouts */
+.jurisdiction-native-shell { border: 0; padding: 0; margin: auto; background: transparent; max-width: calc(100vw - 24px); max-height: calc(100dvh - 24px); overflow: visible; }
+.jurisdiction-native-shell::backdrop { background: #0f172a66; backdrop-filter: blur(2px); }
+.jurisdiction-native-shell .jurisdiction-dialog { margin: 0; box-shadow: 0 12px 35px #0f172a24; }
+.jurisdiction-native-shell .compliance-dialog { width: min(805px,calc(100vw - 36px)); }
+.jurisdiction-native-shell .jurisdiction-dialog > header { margin-inline: 24px; padding-inline: 0; padding-block: 24px 16px; }
+.jurisdiction-native-shell .jurisdiction-dialog > header h2 { font-size: 18px; }
+.jurisdiction-native-shell .jurisdiction-dialog > footer { margin-inline: 24px; padding-inline: 0; }
+.jurisdiction-native-shell .jurisdiction-dialog > footer .primary { background: #00634c; }
+.jurisdiction-native-shell .jurisdiction-entity-picks label { min-height: 42px; font-size: 14px; }
+.jurisdiction-native-shell .jurisdiction-form input, .jurisdiction-native-shell .jurisdiction-form textarea, .jurisdiction-native-shell .jurisdiction-form select { font-size: 14px; }
+.jurisdiction-setup .jurisdiction-card-heading h2 { font-size: 18px; }
+.jurisdiction-setup .jurisdiction-card-heading p { font-size: 14px; line-height: 21px; }
+.jurisdiction-setup .jurisdiction-stepper strong { font-size: 14px; line-height: 20px; }
+.jurisdiction-setup .jurisdiction-stepper small { font-size: 13px; line-height: 18px; }
+.jurisdiction-setup .jurisdiction-stepper { gap: 18px; }
+.jurisdiction-setup .jurisdiction-service-card-main strong { font-size: 14px; }
+.jurisdiction-setup .jurisdiction-service-card-main p { font-size: 13px; line-height: 19px; }
+.jurisdiction-setup .jurisdiction-setup-aside p, .jurisdiction-setup .jurisdiction-setup-aside li { font-size: 13px; line-height: 20px; }
+@media (min-width: 1450px) { .jurisdiction-setup-grid { grid-template-columns: 200px minmax(0,1fr) 290px; gap: 28px; } .jurisdictions-workspace.has-drawer { grid-template-columns: minmax(0,1fr) 380px; } }
+.jurisdiction-stepper button { position: relative; }
+.jurisdiction-stepper button:not(:last-child)::after { content: ''; position: absolute; left: 12px; top: 37px; bottom: -24px; width: 1px; background: #e8edf2; }
+@media (max-width: 700px) { .jurisdiction-stepper button::after { display: none; } }

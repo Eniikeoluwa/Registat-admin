@@ -1,6 +1,11 @@
 import type { ReactNode } from "react";
 
 const icons: Record<string, ReactNode> = {
+  shield: <><path d="M12 2 3 6v6c0 5 4 8 9 10 5-2 9-5 9-10V6Z" /><path d="m8 12 3 3 5-6" /></>,
+  lock: <><rect x="5" y="10" width="14" height="12" rx="3" /><path d="M8 10V6a4 4 0 0 1 8 0v4M12 15v3" /></>,
+  eye: <><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z" /><circle cx="12" cy="12" r="3" /></>,
+  "eye-off": <><path d="m3 3 18 18M10 5h2c6 0 10 7 10 7a20 20 0 0 1-4 4M6 6a20 20 0 0 0-4 6s4 7 10 7c2 0 4-.6 5-1.4" /><path d="M10 10a3 3 0 0 0 4 4" /></>,
+  monitor: <><rect x="2" y="3" width="20" height="14" rx="2" /><path d="M8 22h8M12 17v5" /></>,
   alert: <><path d="m10 3-9 16a2 2 0 0 0 2 3h18a2 2 0 0 0 2-3L14 3a2 2 0 0 0-4 0Z" /><path d="M12 9v5M12 18h.01" /></>,
   folder: <path d="M3 7V4a2 2 0 0 1 2-2h5l3 3h6a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z" />,
   upload: <><path d="M12 16V3m-5 5 5-5 5 5M3 15v5a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5" /></>,

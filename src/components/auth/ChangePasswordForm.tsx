@@ -1,15 +1,17 @@
 "use client";
 import Link from "next/link";
+import AdminNavIcon from "@/components/admin/AdminNavIcon";
 import { useState, type FormEvent } from "react";
 import { authRequest, AuthError } from "@/lib/auth/client";
 import { validateAuth, authHref } from "@/lib/auth/validation";
-export default function ChangePasswordForm() {
+export default function ChangePasswordForm({ design = false }: { design?: boolean }) {
   const [values, setValues] = useState({ oldPassword: "", newPassword: "", confirmPassword: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   const [reauth, setReauth] = useState("");
   const [visible, setVisible] = useState(false);
+  const [visibleFields,setVisibleFields]=useState<Record<string,boolean>>({});
   async function submit(event: FormEvent) {
     event.preventDefault();
     if (busy) return;
@@ -25,6 +27,7 @@ export default function ChangePasswordForm() {
       } } }
     finally { setBusy(false); }
   }
+  if (design) return <form onSubmit={submit} noValidate className="settings-password-form">{([["oldPassword", "Current password", "Enter current password"], ["newPassword", "New password", "Enter new password"], ["confirmPassword", "Confirm new password", "Confirm new password"]] as const).map(([key,label,placeholder])=><label key={key}>{label}<span><AdminNavIcon name="lock"/><input aria-label={label} type={visibleFields[key]?"text":"password"} autoComplete={key==="oldPassword"?"current-password":"new-password"} maxLength={128} placeholder={placeholder} value={values[key]} onChange={event=>setValues({...values,[key]:event.target.value})} aria-invalid={!!errors[key]}/><button type="button" aria-label={`${visibleFields[key]?"Hide":"Show"} ${label.toLowerCase()}`} onClick={()=>setVisibleFields(value=>({...value,[key]:!value[key]}))}><AdminNavIcon name={visibleFields[key]?"eye":"eye-off"}/></button></span>{errors[key]&&<small role="alert">{errors[key]}</small>}</label>)}{error&&<p role="alert">{error}</p>}{reauth&&<Link href={reauth}>Log in again to change your password</Link>}<button type="submit" disabled={busy||!!reauth} className="settings-primary">{busy?"Updating…":"Update password"}</button></form>;
   return <form onSubmit={submit} noValidate className="space-y-5">
     <h2 className="text-xl font-bold">Change password</h2>
     <p className="text-sm text-slate-500">Use 8–128 characters. You will need to log in again after changing your password.</p>

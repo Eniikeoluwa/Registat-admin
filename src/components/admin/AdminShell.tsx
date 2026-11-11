@@ -19,6 +19,8 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
   const [query, setQuery] = useState("");
   const searchRef = useRef<HTMLInputElement>(null);
   const account = useAccount();
+  const attention = useApi<{ attention: { pendingApplicationReviews?: number; overdueCompliance?: number } }>(can(account, "dashboard:read") ? "dashboard/admin" : null);
+  const unread = useApi<{ count: number }>("notifications/unread-count");
   const applicationSearch = useApi<AdminApplicationResponse[]>(query.trim() && can(account, "applications:read") ? `applications/admin?search=${encodeURIComponent(query.trim().slice(0, 100))}&limit=6` : null);
   const companySearch = useApi<AdminCompanyResponse[]>(query.trim() && can(account, "companies:read") ? `companies/admin?search=${encodeURIComponent(query.trim().slice(0, 100))}&limit=6` : null);
   const companyMatches = companySearch.data || [];
@@ -46,7 +48,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
       <nav aria-label="Admin navigation" className="admin-navigation">
         {adminNavigation.map((group) => <div key={group.label} className="admin-nav-group"><p>{group.label}</p><div>{group.items.filter(item => !sectionPermission(item.path) || can(account, sectionPermission(item.path))).map((item) => {
           const active = pathname === item.path || pathname.startsWith(`${item.path}/`);
-          return <Link key={item.path} href={item.path} aria-current={active ? "page" : undefined} className={`admin-nav-link ${active ? "is-active" : ""}`} onClick={() => setMenuOpen(false)}><AdminNavIcon name={item.icon} /><span>{item.label}</span></Link>;
+          return <Link key={item.path} href={item.path} aria-current={active ? "page" : undefined} className={`admin-nav-link ${active ? "is-active" : ""}`} onClick={() => setMenuOpen(false)}><AdminNavIcon name={item.icon} /><span>{item.label}</span>{((item.path === "/admin/applications" && attention.data?.attention.pendingApplicationReviews) || (item.path === "/admin/compliance" && attention.data?.attention.overdueCompliance)) ? <span className="admin-nav-badge">{item.path === "/admin/applications" ? attention.data?.attention.pendingApplicationReviews : attention.data?.attention.overdueCompliance}</span> : null}</Link>;
         })}</div></div>)}
       </nav>
       <div className="admin-promo"><div><span className="admin-star"><AdminAsset name="star" /></span><strong>Registat Admin</strong><p>Manage global operations with ease.</p></div></div>
@@ -62,7 +64,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
           {query.trim() && <div className="admin-search-results"><p>Companies</p>{companyMatches.length ? companyMatches.slice(0, 6).map(company => <Link key={company._id} href={`/admin/companies/${company._id}`} onClick={() => setQuery("")}><strong>{company.name}</strong><span>{company.registrationNumber || company.country} · {company.jurisdiction}</span></Link>) : <p>{companySearch.loading ? "Searching companies…" : companySearch.error || "No matching companies."}</p>}<p>Customers</p>{customerMatches.length ? customerMatches.slice(0, 6).map(customer => <Link key={customer._id} href={`/admin/customers/${customer._id}`} onClick={() => setQuery("")}><strong>{customer.name}</strong><span>{customer.email}</span></Link>) : <p>{customerSearch.loading ? "Searching users…" : customerSearch.error || "No matching users."}</p>}<p>Applications</p>{matches.length ? matches.map((task) => <Link key={task._id} href={`/admin/applications/${task._id}`} onClick={() => setQuery("")}><strong>{task.reference}</strong><span>{task.userInfo?.name} · {task.serviceName}</span></Link>) : <p>{applicationSearch.loading ? "Searching applications…" : applicationSearch.error || "No matching applications."}</p>}</div>}
         </div>
         <div className="admin-topbar-actions">
-          <details className="admin-dropdown"><summary aria-label="Notifications" className="admin-notification"><AdminAsset name="bell" /></summary><div className="admin-dropdown-panel"><strong>Notifications</strong><Notifications compact /><Link href="/admin/activity">View all notifications</Link></div></details>
+          <details className="admin-dropdown"><summary aria-label="Notifications" className="admin-notification"><AdminAsset name="bell" />{!!unread.data?.count && <i />}</summary><div className="admin-dropdown-panel"><strong>Notifications</strong><Notifications compact /><Link href="/admin/activity">View all notifications</Link></div></details>
           <details className="admin-dropdown"><summary className="admin-top-profile"><span className="admin-avatar"><AccountInitials /></span><span>{account?.name}</span><AdminAsset name="down" /></summary><div className="admin-dropdown-panel"><Link href="/admin/settings">Account settings</Link><LogoutButton /></div></details>
         </div>
       </header>

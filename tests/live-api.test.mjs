@@ -4,6 +4,9 @@ import { harness, request, context } from './helpers/api-harness.mjs';
 
 const reference = 'REGPAY-' + 'a'.repeat(32);
 for (const [method, path] of [
+  ['GET', 'payments/admin?page=1&limit=10'],
+  ['GET', 'payments/admin?domain=live&page=1&limit=10'],
+  ['GET', 'payments/admin?domain=test&page=1&limit=10'],
   ['GET', 'payments/admin?currency=NGN&status=pending&page=2&limit=20'],
   ['GET', `payments/admin/${reference}`],
   ['POST', `payments/admin/${reference}/verify`],

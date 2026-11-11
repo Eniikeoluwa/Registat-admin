@@ -11,6 +11,9 @@ import "./services.css";
 import "./jurisdictions.css";
 import "./compliance.css";
 import "./settings.css";
+import "./design.css";
+import "./company-design.css";
+import "./payment-design.css";
 
 const dmSans = DM_Sans({ subsets: ["latin"], variable: "--font-admin-heading" });
 

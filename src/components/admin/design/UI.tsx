@@ -1,0 +1,29 @@
+"use client";
+import { useEffect, useRef, useState, type ReactNode } from "react";
+import type { PaginationMetaResponse } from "@/lib/api/types";
+import AdminNavIcon from "../AdminNavIcon";
+import { lockAdminDialogScroll } from "../dialogScrollLock";
+export const Icon = AdminNavIcon;
+export function initials(name = "") { return name.split(/\s+/).filter(Boolean).slice(0, 2).map(part => part[0]).join("").toUpperCase(); }
+export function Avatar({ name, blue = false }: { name: string; blue?: boolean }) { return <span className={`application-initials ${blue ? "blue" : ""}`}>{initials(name)}</span>; }
+export function date(value?: string) { return value && Number.isFinite(Date.parse(value)) ? new Intl.DateTimeFormat("en-GB", { day: "2-digit", month: "short", year: "numeric" }).format(new Date(value)) : "—"; }
+export function time(value?: string) { return value && Number.isFinite(Date.parse(value)) ? new Intl.DateTimeFormat("en-GB", { hour: "numeric", minute: "2-digit", hour12: true }).format(new Date(value)) : ""; }
+export function countryName(code?: string) { if (!code) return "—"; try { return new Intl.DisplayNames(["en"], { type: "region" }).of(code) || code; } catch { return code; } }
+export function Country({ code }: { code?: string }) { const flag = code && /^[A-Z]{2}$/.test(code) ? [...code].map(character => String.fromCodePoint(character.charCodeAt(0) + 127397)).join("") : ""; return <span className="design-country"><span aria-hidden="true">{flag}</span>{countryName(code)}</span>; }
+const labels: Record<string, string> = { in_progress: "In Progress", pending: "Pending", under_review: "Under Review", action_required: "Action Required", processing: "Processing", completed: "Completed", rejected: "Rejected", cancelled: "Cancelled", active: "Active", inactive: "Inactive", dissolved: "Dissolved", registration_in_progress: "Pending", suspended: "Suspended", banned: "Blocked", unpaid: "Awaiting Payment", paid: "Paid", review_required: "Review Required" };
+export function Badge({ value, label }: { value: string; label?: string }) { return <span className={`design-badge ${value}`}>{label || labels[value] || value.replaceAll("_", " ")}</span>; }
+export function Notice({ children, error = false }: { children: ReactNode; error?: boolean }) { return <div className={error ? "application-form-error" : "application-info"} role={error ? "alert" : "status"}>{!error && <Icon name="info" />}<div>{children}</div></div>; }
+export function Pagination({ value, noun, selected = 0, onPage }: { value?: PaginationMetaResponse; noun: string; selected?: number; onPage: (page: number) => void }) {
+  if (!value) return null;
+  const from = value.total ? (value.page - 1) * value.limit + 1 : 0;
+  return <footer className="applications-pagination"><p>{selected > 0 && `${selected} selected · `}Showing {from}–{Math.min(value.page * value.limit, value.total)} of {value.total} {noun}</p><div><button aria-label={`Previous ${noun} page`} disabled={!value.hasPreviousPage} onClick={() => onPage(value.page - 1)}>‹</button><span aria-current="page">{value.page}</span><button aria-label={`Next ${noun} page`} disabled={!value.hasNextPage} onClick={() => onPage(value.page + 1)}>›</button></div></footer>;
+}
+export function DateFilter({ from, to, onChange, labels = ["From", "To"] }: { from: string; to: string; onChange: (from: string, to: string) => void; labels?: string[] }) { return <details className="applications-date-filter"><summary><Icon name="calendar" />{from || to ? "Date range selected" : "Select date range"}</summary><div><label>{labels[0]}<input type="date" value={from} max={to || undefined} onChange={event => onChange(event.target.value, to)} /></label><label>{labels[1]}<input type="date" value={to} min={from || undefined} onChange={event => onChange(from, event.target.value)} /></label><button type="button" onClick={() => onChange("", "")}>Clear dates</button></div></details>; }
+export function Dialog({ title, children, onClose, className = "", busy = false }: { title: string; children: ReactNode; onClose: () => void; className?: string; busy?: boolean }) {
+  const ref = useRef<HTMLDialogElement>(null); const restoreFocus = useRef<HTMLElement | null>(null);
+  useEffect(() => { restoreFocus.current = document.activeElement as HTMLElement | null; const dialog = ref.current; dialog?.showModal(); const unlock = lockAdminDialogScroll(); return () => { dialog?.close(); unlock(); restoreFocus.current?.focus(); }; }, []);
+  return <dialog ref={ref} aria-label={title} className={className} onCancel={event => { event.preventDefault(); if (!busy) onClose(); }} onClick={event => { if (event.target === event.currentTarget && !busy) { const rect = event.currentTarget.getBoundingClientRect(); if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) onClose(); } }}>{children}</dialog>;
+}
+export function CopyReference({ value }: { value: string }) { const [message, setMessage] = useState(""); return <><button type="button" className="application-icon-button" aria-label={`Copy ${value}`} onClick={async () => { try { await navigator.clipboard.writeText(value); setMessage("Copied"); } catch { setMessage("Select the reference to copy"); } }}><Icon name="copy" /></button>{message && <span className="design-copy-message" role="status">{message}</span>}</>; }
+export function useDrawerClose(onClose: () => void) { useEffect(() => { const close = (event: KeyboardEvent) => { if (event.key === "Escape" && !document.querySelector("dialog[open]")) onClose(); }; window.addEventListener("keydown", close); return () => window.removeEventListener("keydown", close); }, [onClose]); }
+export function Field({ title, children, required = false }: { title: string; children: ReactNode; required?: boolean }) { return <label className="application-field"><span>{title}{required && <b> *</b>}</span>{children}</label>; }
